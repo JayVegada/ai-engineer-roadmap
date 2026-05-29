@@ -65,7 +65,7 @@ cd ai-engineer-roadmap
 
 | Phase | Focus |
 |---|---|
-| Phase 0 | Foundation — C, Python, JavaScript, HTML/CSS |
+| Phase 0 | Foundation — Python, SQL, AI Coding |
 | Phase 1 | Data & Math — NumPy, Pandas, Statistics, Linear Algebra |
 | Phase 2 | Core ML — Scikit-learn, Supervised/Unsupervised Learning |
 | Phase 3 | Deep Learning — Neural Networks, PyTorch/TensorFlow |
