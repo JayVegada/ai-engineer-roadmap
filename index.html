@@ -1,0 +1,1900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>AI Roadmap 2026 — CampusX Master Tracker</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ── DESIGN TOKENS — GitHub Dark (Deep Canvas) ─────────────────── */
+:root {
+  /* Backgrounds: 4-step additive stack — Linear midnight command deck */
+  --bg:        #08090a;   /* Onyx — deepest canvas */
+  --surface:   #0f1011;   /* Charcoal — sidebar, topbar, panels */
+  --card:      #161718;   /* Obsidian — raised cards, active states */
+  --card-hi:   #23252a;   /* Graphite — table headers, innermost layer */
+
+  /* Borders: crisp — do ALL depth work, not shadows */
+  --border:       #23252a;
+  --border-lo:    #161718;
+  --border-light: rgba(255,255,255,0.05);
+  --border-hi:    rgba(255,255,255,0.08);
+
+  /* Primary: acid-lime — rationed to ONE filled CTA per screen */
+  --primary:      #e4f222;
+  --primary-dim:  rgba(228,242,34,0.10);
+  --primary-glow: rgba(228,242,34,0.22);
+  --pri-dim:      rgba(228,242,34,0.10);   /* alias */
+  --pri-glow:     rgba(228,242,34,0.22);   /* alias */
+  /* Secondary accent: indigo for icon accents, decorative dots */
+  --accent-sec:   #5e6ad2;
+
+  /* Text: calibrated for long reading sessions */
+  --text-pri:   #f7f8f8;   /* Snow — standard body, no pure white */
+  --text-sec:   #8a8f98;   /* Fog — secondary labels */
+  --text-muted: #8a8f98;   /* alias for compat */
+  --text-mut:   #62666d;   /* Slate — de-emphasized, hints */
+  --text-faint: #383b3f;   /* Steel — disabled, extreme bg text */
+
+  /* Status: desaturated to prevent retinal burn */
+  --green:   #27a644;
+  --success: #27a644;
+  --amber:   #d29922;
+  --warn:    #d29922;
+  --orange:  #f0883e;
+  --danger:  #eb5757;
+
+  /* Text on colored backgrounds (primary buttons, skip link) — dark text on lime */
+  --text-on-primary: #08090a;
+  /* Toggle knob — always white dot */
+  --knob-bg: #ffffff;
+
+  /* Shadows: minimal — border does primary depth work */
+  --shadow-flat:  0 0 0 1px var(--border);
+  --shadow-hover: 0 2px 4px rgba(0,0,0,0.4), 0 0 0 1px var(--border);
+  --shadow-modal: 0 4px 32px rgba(8,9,10,0.6), 0 0 0 1px rgba(255,255,255,0.03);
+
+  /* Motion: smooth ease-out — no bounce, no overshoot */
+  --t-fast:   150ms ease;
+  --t-smooth: 220ms cubic-bezier(0.4, 0, 0.2, 1);   /* Material smooth — replaces old snappy spring */
+  --t-snappy: 220ms cubic-bezier(0.4, 0, 0.2, 1);   /* kept for compat */
+
+  /* Radius: Linear scale */
+  --r-sm:  6px;    /* badges, chips */
+  --r-md:  12px;   /* buttons, inputs */
+  --r-lg:  16px;   /* main cards, panels */
+
+  /* Fluid type scale */
+  --text-sm:   clamp(0.80rem, 2vw, 0.875rem);
+  --text-base: clamp(0.875rem, 2.5vw, 1rem);
+  --text-lg:   clamp(1.0rem, 3vw, 1.25rem);
+  --text-xl:   clamp(1.2rem, 4vw, 1.75rem);
+  --text-2xl:  clamp(1.5rem, 5vw, 2.25rem);
+
+  --topbar-h: 56px;
+}
+
+/* ── LIGHT MODE ─────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:        #fafafa;
+  --surface:   #ffffff;
+  --card:      #ffffff;
+  --card-hi:   #fafafa;
+  --border:       #ebebeb;
+  --border-lo:    #f5f5f5;
+  --border-light: rgba(23,23,23,0.06);
+  --border-hi:    rgba(23,23,23,0.12);
+  --primary:      #171717;
+  --primary-dim:  rgba(23,23,23,0.06);
+  --primary-glow: rgba(23,23,23,0.12);
+  --pri-dim:      rgba(23,23,23,0.06);
+  --pri-glow:     rgba(23,23,23,0.12);
+  --accent-sec:   #0070f3;
+  --text-pri:   #171717;
+  --text-sec:   #4d4d4d;
+  --text-muted: #4d4d4d;
+  --text-mut:   #7d7d7d;
+  --text-faint: #a8a8a8;
+  --green:   #1a7f37;
+  --success: #1a7f37;
+  --amber:   #9a6700;
+  --warn:    #9a6700;
+  --orange:  #bc4c00;
+  --danger:  #cf222e;
+  --shadow-flat:  0 0 0 1px var(--border);
+  --shadow-hover: 0 0 0 1px var(--border), 0 2px 2px rgba(0,0,0,0.04);
+  --shadow-modal: 0 8px 24px rgba(140,149,159,0.2), 0 0 0 1px var(--border);
+  --text-on-primary: #ffffff;
+  --knob-bg: #ffffff;
+  --r-sm: 6px;
+  --r-md: 6px;
+  --r-lg: 12px;
+}
+
+/* ── SCREEN-READER UTILITY ──────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── SKIP LINK ──────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute; top: -100%; left: 8px;
+  background: var(--primary); color: var(--text-on-primary);
+  padding: 8px 16px; border-radius: var(--r-sm);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700; z-index: 9999;
+  text-decoration: none;
+}
+.skip-link:focus { top: 8px; }
+
+/* ── SMOOTH THEME TRANSITIONS (prevents flash on toggle) ───────── */
+body {
+  transition:
+    background-color 0.25s ease,
+    color            0.25s ease;
+}
+.mobile-topbar, .desktop-topbar, .stage-sidebar, .searchbar,
+.import-modal-inner, .import-schema, .import-textarea,
+.dash-card, .sec-row, .topic-row, .stage-btn, .subj-tab,
+pre, code, input, button, .search-input {
+  transition:
+    background-color 0.25s ease,
+    color            0.25s ease,
+    border-color     0.20s ease;
+}
+
+/* touch-action: manipulation — eliminates 300ms tap delay on mobile */
+button, .stage-btn, .sec-row, .topic-row, .subj-tab,
+.dash-card, .hide-done-wrap, .chk, .imported-remove {
+  touch-action: manipulation;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+}
+
+
+/* ── RESET ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-size: 16px; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-hi); }
+
+#app {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-pri);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+.brand-title, .dash-title, .import-modal-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-pri);
+}
+.brand-title { font-size: clamp(14px, 2vw, 16px); }
+.dash-title  { font-size: clamp(20px, 4vw, 24px); }
+
+/* Micro-UI caps — 11px minimum (10px FORBIDDEN per readability floor) */
+.brand-sub, .level-lbl, .sidebar-drawer-title, .import-list-title, .hide-done-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+}
+
+/* Tabular numbers */
+.xp-val, .streak-count, .sec-count, .subj-pct, .stage-pct, #overall-text, .mobile-streak-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-pri);
+}
+
+/* ── INTERACTION STATES ─────────────────────────────────────────── */
+button, .stage-btn, .sec-row, .topic-row, .subj-tab, .dash-card {
+  outline: none;
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast),
+              color var(--t-fast), opacity var(--t-fast), transform 0.08s ease;
+}
+
+/* Focus-visible: sharp ring */
+button:focus-visible, .sec-row:focus-visible, .dash-card:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-dim);
+}
+
+/* Active: gentle depress — not a pop */
+button:active:not(:disabled), .dash-card:active, .topic-row:active {
+  transform: scale(0.985);
+  transition: transform 0.1s ease-out;
+}
+
+/* Disabled */
+button:disabled {
+  opacity: 0.38;
+  filter: grayscale(0.4);
+  cursor: not-allowed;
+  transform: none !important;
+  pointer-events: none;
+}
+
+/* ── APP SHELL & TOPBAR ────────────────────────────────────────── */
+.mobile-topbar {
+  display: flex; align-items: center; padding: 0 16px;
+  padding-top: env(safe-area-inset-top);
+  height: calc(var(--topbar-h) + env(safe-area-inset-top));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0; z-index: 50;
+}
+.hamburger-btn {
+  background: none; border: none; cursor: pointer; color: var(--text-sec);
+  min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: flex-start;
+}
+.hamburger-btn:hover { color: var(--text-pri); }
+
+.mobile-brand-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 15px; font-weight: 800; letter-spacing: -0.04em;
+  flex: 1; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: var(--text-pri);
+}
+.mobile-topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.mobile-streak-badge { color: var(--orange); padding: 4px; }
+
+.mobile-view-pills {
+  display: flex; background: var(--bg); border-radius: var(--r-sm); padding: 2px;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+.mvbtn {
+  background: transparent; border: none; font-size: 11px; padding: 6px 12px;
+  border-radius: 4px; color: var(--text-sec); font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.05em; text-transform: uppercase;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+.mvbtn.active { background: var(--surface); color: var(--text-pri); box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+
+.mobile-progress-strip { height: 2px; background: var(--bg); flex-shrink: 0; }
+.mobile-progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--primary)); transition: width var(--t-snappy); width: 0%; }
+
+/* Desktop Topbar */
+.desktop-topbar {
+  display: none; padding: 0 24px; height: 64px;
+  border-bottom: 1px solid var(--border); background: var(--surface);
+  align-items: center; gap: 24px; flex-shrink: 0;
+}
+.brand-sub { margin-top: 4px; }
+.overall-progress { flex: 1; max-width: 260px; min-width: 120px; }
+.overall-text { font-size: 11px; color: var(--text-sec); margin-top: 6px; }
+.header-stats { display: flex; align-items: center; gap: 24px; }
+.level-lbl { margin-bottom: 4px; }
+.xp-val { font-size: 11px; margin-top: 4px; }
+.xp-bar-wrap { background: var(--bg); border-radius: 99px; height: 4px; width: 80px; box-shadow: inset 0 0 0 1px var(--border); }
+.xp-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--amber), var(--orange)); transition: width var(--t-snappy); }
+.streak-fire { font-size: 16px; margin-bottom: 2px; }
+.streak-count { font-size: 12px; color: var(--orange); }
+
+.view-toggle { display: flex; background: var(--bg); border-radius: var(--r-sm); padding: 4px; box-shadow: inset 0 0 0 1px var(--border); }
+.vbtn {
+  padding: 8px 16px; font-size: 11px; font-weight: 700; border-radius: 4px;
+  background: transparent; border: none; color: var(--text-sec);
+  text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+.vbtn.active { background: var(--card); color: var(--text-pri); box-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+
+.topbar-import {
+  padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: var(--r-sm);
+  background: transparent; border: 1px solid var(--border); color: var(--primary);
+  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.topbar-import:hover { background: var(--primary-dim); border-color: var(--primary); }
+
+/* ── SEARCHBAR ─────────────────────────────────────────────────── */
+.searchbar {
+  padding: 8px 16px; background: var(--surface); border-bottom: 1px solid var(--border);
+  display: flex; gap: 16px; align-items: center; flex-shrink: 0;
+}
+.search-input {
+  flex: 1; background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 10px 16px; color: var(--text-pri);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; outline: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.search-input::placeholder { color: var(--text-sec); }
+.search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-dim); }
+
+.hide-done-wrap { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+.toggle-switch {
+  width: 36px; height: 20px; background: var(--border); border-radius: 99px;
+  position: relative; transition: background var(--t-fast);
+}
+.toggle-switch.on { background: var(--green); }
+.toggle-knob {
+  width: 16px; height: 16px; background: var(--knob-bg); border-radius: 50%;
+  position: absolute; top: 2px; left: 2px; transition: transform var(--t-snappy);
+}
+.toggle-switch.on .toggle-knob { transform: translateX(16px); }
+
+/* ── SIDEBAR & MAIN AREA ───────────────────────────────────────── */
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(1,4,9,0.85);
+  backdrop-filter: blur(4px); z-index: 200; opacity: 0; transition: opacity var(--t-fast);
+}
+.sidebar-overlay.visible { display: block; opacity: 1; }
+
+.main-area { display: flex; flex: 1; min-height: 0; position: relative; }
+
+.stage-sidebar {
+  position: fixed; top: 0; left: 0; width: 85vw; max-width: 320px; height: 100vh;
+  z-index: 300; transform: translateX(-100%); transition: transform var(--t-snappy);
+  background: var(--surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+}
+.stage-sidebar.open { transform: translateX(0); box-shadow: var(--shadow-modal); }
+
+.sidebar-drawer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px; padding-top: max(16px, calc(env(safe-area-inset-top) + 16px));
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-close-btn {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text-pri);
+  min-width: 32px; min-height: 32px; border-radius: var(--r-sm); cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.sidebar-close-btn:hover { background: var(--card); border-color: var(--border-hi); }
+
+.sidebar-stage-list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+
+/* Stage Button */
+.stage-btn {
+  display: flex; align-items: center; gap: 12px; padding: 12px;
+  border-radius: var(--r-md); background: transparent; border: 1px solid transparent;
+  cursor: pointer;
+}
+.stage-btn:hover { background: var(--card); border-color: var(--border); }
+.stage-btn.active { background: color-mix(in srgb, var(--c) 12%, transparent); border-color: color-mix(in srgb, var(--c) 25%, var(--border)); }
+
+/* ── TRACKER CONTENT ───────────────────────────────────────────── */
+.tracker-content { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+.subject-tabs-wrap {
+  display: flex; overflow-x: auto; background: var(--surface);
+  border-bottom: 1px solid var(--border); scrollbar-width: none;
+}
+.subj-tab {
+  padding: 16px 20px; border-bottom: 2px solid transparent; font-size: 13px; font-weight: 600;
+  color: var(--text-sec); display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, border-bottom-color 180ms ease;
+}
+.subj-tab:hover { color: var(--text-pri); background: var(--card); }
+.subj-tab.active { color: var(--text-pri); border-bottom-color: var(--c); background: color-mix(in srgb, var(--c) 8%, transparent); }
+
+.tracker-body { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+
+/* Sections */
+.section-list {
+  display: flex; overflow-x: auto; padding: 8px 12px; gap: 8px;
+  border-bottom: 1px solid var(--border); background: var(--surface); scrollbar-width: none;
+}
+.sec-row {
+  padding: 8px 16px; border-radius: var(--r-sm); border: 1px solid var(--border);
+  background: var(--bg); display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-sec);
+  cursor: pointer; transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.sec-row:hover { border-color: var(--border-hi); color: var(--text-pri); background: var(--card); }
+.sec-row.active { background: color-mix(in srgb, var(--c) 12%, transparent); border-color: color-mix(in srgb, var(--c) 35%, var(--border)); color: var(--text-pri); }
+
+.sec-row-progress { display: none; }
+.sec-tick { display: none; }
+
+/* Topics */
+.topics-pane { flex: 1; overflow-y: auto; background: var(--bg); }
+.topic-row {
+  display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer; transition: background var(--t-fast);
+}
+.topic-row:hover { background: var(--card); }
+.chk {
+  width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 6px;
+  flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center;
+  transition: background 180ms ease-out, border-color 180ms ease-out, box-shadow 180ms ease-out;
+  background: var(--surface);
+}
+.chk.done { background: var(--c); border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 15%, transparent); }
+.topic-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; line-height: 1.65; color: var(--text-pri); }
+
+/* Progress Pills */
+.pill-bar { background: var(--bg); border-radius: 99px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--border); }
+.pill-fill { height: 100%; border-radius: 99px; transition: width var(--t-snappy); }
+.overall-fill { background: linear-gradient(90deg, var(--green), var(--primary)); height: 6px; }
+
+/* ── DASHBOARD ──────────────────────────────────────────────────── */
+.dashboard-content { flex: 1; overflow-y: auto; padding: 24px; display: none; }
+.dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
+.dash-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 1px solid var(--border-hi);
+  border-radius: var(--r-lg); padding: 20px;
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), transform 200ms ease-out, box-shadow var(--t-fast);
+}
+.dash-card:hover {
+  background: var(--card-hi);
+  border-color: var(--border-hi);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ── BUTTONS ───────────────────────────────────────────────────── */
+.mark-all-btn {
+  background: var(--surface); border-radius: var(--r-sm); padding: 12px 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+  border: 1px solid var(--border); color: var(--text-pri); width: 100%; max-width: 300px;
+  cursor: pointer; transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.mark-all-btn:hover { background: color-mix(in srgb, var(--c) 12%, var(--surface)); border-color: var(--c); }
+
+.mobile-import-btn-topbar {
+  background: none; border: 1px solid var(--border); border-radius: var(--r-sm);
+  color: var(--text-sec); cursor: pointer; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.mobile-import-btn-topbar:hover {
+  background: var(--primary-dim); border-color: var(--primary); color: var(--primary);
+}
+.import-modal-bg {
+  position: fixed; inset: 0; background: rgba(1,4,9,0.88); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; z-index: 600;
+  opacity: 0; transition: opacity var(--t-fast);
+}
+.import-modal-bg.open { display: flex; opacity: 1; }
+.import-modal-inner {
+  background: var(--surface); border: 1px solid var(--border); border-top: 1px solid var(--border-hi);
+  border-radius: var(--r-lg); padding: 32px; width: 600px; max-width: 92vw; max-height: 90vh;
+  box-shadow: var(--shadow-modal); overflow-y: auto; transform: translateY(20px); transition: transform var(--t-snappy);
+}
+.import-modal-bg.open .import-modal-inner { transform: translateY(0); }
+
+.import-schema { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-sec); background: var(--bg); padding: 8px; border-radius: 6px; }
+.import-textarea {
+  width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm);
+  padding: 16px; color: var(--text-pri); font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  min-height: 160px; margin-top: 16px; outline: none; transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.import-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-dim); }
+
+.import-btn-primary {
+  flex: 1; padding: 12px 24px; border-radius: var(--r-sm); background: var(--primary); color: var(--text-on-primary);
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 13px;
+  cursor: pointer; transition: background var(--t-fast);
+}
+.import-btn-primary:hover { filter: brightness(1.1); }
+.import-btn-cancel {
+  padding: 12px 24px; border-radius: var(--r-sm); background: var(--bg); color: var(--text-pri);
+  border: 1px solid var(--border); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 13px;
+  cursor: pointer; transition: background var(--t-fast), border-color var(--t-fast);
+}
+.import-btn-cancel:hover { background: var(--card); border-color: var(--border-hi); }
+
+/* ── SEARCH RESULTS ─────────────────────────────────────────────── */
+.search-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--c, var(--primary));
+  margin-bottom: 4px; display: block; opacity: 0.75;
+}
+
+/* ── IMPORT MODAL EXTRAS ─────────────────────────────────────────── */
+.import-msg-ok {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; color: var(--green); display: none;
+  padding: 10px 14px; margin-top: 12px;
+  background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.18);
+  border-radius: var(--r-sm);
+}
+.import-msg-err {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; color: var(--danger); display: none;
+  padding: 10px 14px; margin-top: 12px;
+  background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.18);
+  border-radius: var(--r-sm);
+}
+.import-btn-row {
+  display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;
+}
+.imported-list {
+  margin-top: 20px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden;
+}
+.import-list-title {
+  padding: 10px 16px; background: var(--card-hi);
+  border-bottom: 1px solid var(--border);
+}
+.imported-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--border-light);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; color: var(--text-pri);
+}
+.imported-item:last-child { border-bottom: none; }
+.imported-remove {
+  font-size: 12px; color: var(--danger); cursor: pointer; padding: 4px 8px;
+  border-radius: var(--r-sm); border: 1px solid transparent; font-weight: 600;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.imported-remove:hover {
+  background: rgba(248,81,73,0.08); border-color: rgba(248,81,73,0.25);
+}
+
+/* ── THEME TOGGLE ───────────────────────────────────────────────── */
+.theme-toggle-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-pri);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  min-width: 80px;   /* stable width — no layout shift on toggle */
+  flex-shrink: 0;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.theme-toggle-btn::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-sec);
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover {
+  background: var(--card-hi);
+  border-color: var(--border-hi);
+}
+/* Mobile theme btn — compact version in topbar */
+.mobile-topbar .theme-toggle-btn {
+  min-width: unset;
+  padding: 6px 8px;
+  gap: 4px;
+}
+.mobile-topbar .theme-toggle-btn .theme-label { display: none; }
+.mobile-topbar .theme-toggle-btn::before { width: 6px; height: 6px; }
+
+/* ── DATA vs LABEL CONTRAST SPLIT ───────────────────────────────── */
+/* Stat numbers always --text-pri, labels always --text-sec */
+.stat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700; color: var(--text-pri);
+}
+.stat-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500; color: var(--text-sec); opacity: 0.85;
+}
+.dash-topics-line {
+  font-size: 12px; margin-bottom: 16px;
+  display: flex; align-items: baseline; gap: 4px;
+}
+.dash-topics-line .stat-num { font-size: 13px; }
+.dash-topics-line .stat-label { font-size: 12px; }
+@media (max-width: 767px) {
+  button, .stage-btn, .sec-row, .topic-row { min-height: 44px; }
+  .hide-done-label { display: none; }
+}
+
+@media (min-width: 768px) {
+  .dashboard-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .mobile-topbar, .mobile-progress-strip { display: none; }
+  .desktop-topbar { display: flex; }
+
+  .stage-sidebar {
+    position: relative; transform: none !important; width: 260px;
+    border-right: 1px solid var(--border); background: var(--surface); box-shadow: none;
+  }
+  .sidebar-drawer-header, .sidebar-overlay { display: none !important; }
+
+  .tracker-body { flex-direction: row; }
+  .section-list {
+    flex-direction: column; width: 280px; height: 100%; border-right: 1px solid var(--border);
+    border-bottom: none; padding: 16px; gap: 8px; background: var(--surface); overflow-y: auto;
+  }
+  .sec-row {
+    flex-direction: column; align-items: stretch; padding: 16px; gap: 8px; white-space: normal;
+  }
+  .sec-row-title { font-size: 13px; line-height: 1.4; }
+  .sec-row-progress { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .sec-tick { display: none; }
+
+  .topic-row { padding: 20px 32px; }
+  .dashboard-content { padding: 40px; }
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div id="app">
+
+  <!-- ── MOBILE TOPBAR ──────────────────────────────────────────── -->
+  <div class="mobile-topbar" id="mobile-topbar">
+    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Open stages">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+        <rect y="0"  width="18" height="2" rx="1" fill="currentColor"/>
+        <rect y="6"  width="13" height="2" rx="1" fill="currentColor"/>
+        <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="mobile-brand-text">AI Roadmap 2026</div>
+    <div class="mobile-topbar-right">
+      <div class="mobile-streak-badge">🔥<span id="mobile-streak-count">0</span></div>
+      <div class="mobile-view-pills">
+        <button class="mvbtn active" id="mbtn-tracker" onclick="switchMobileView('tracker')">T</button>
+        <button class="mvbtn" id="mbtn-dash" onclick="switchMobileView('dashboard')">D</button>
+      </div>
+      <button class="theme-toggle-btn" id="mobile-theme-btn" onclick="toggleTheme()" aria-label="Theme: Dark — click to switch">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-label">Dark</span>
+      </button>
+      <button class="mobile-import-btn-topbar" onclick="openImport()" aria-label="Import">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 4.5v7M4.5 8h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile progress strip -->
+  <div class="mobile-progress-strip">
+    <div class="mobile-progress-fill" id="mobile-progress-fill"></div>
+  </div>
+
+  <!-- ── DESKTOP TOPBAR ─────────────────────────────────────────── -->
+  <div class="desktop-topbar">
+    <div>
+      <div class="brand-title">AI Roadmap 2026</div>
+      <div class="brand-sub">CAMPUSX · MASTER TRACKER</div>
+    </div>
+    <div class="overall-progress">
+      <div class="pill-bar" style="height:4px">
+        <div class="pill-fill overall-fill" id="overall-fill" style="width:0%"></div>
+      </div>
+      <div id="overall-text" class="overall-text">0/0 topics — 0%</div>
+    </div>
+    <div class="header-stats">
+      <div>
+        <div id="level-lbl" class="level-lbl">LVL 1</div>
+        <div class="xp-bar-wrap"><div class="xp-bar-fill" id="level-fill" style="width:0%"></div></div>
+        <div id="xp-val" class="xp-val">0 XP</div>
+      </div>
+      <div style="text-align:center">
+        <div class="streak-fire">🔥</div>
+        <div id="streak-count" class="streak-count">0</div>
+      </div>
+    </div>
+    <div class="view-toggle">
+      <button class="vbtn active" id="btn-tracker">tracker</button>
+      <button class="vbtn" id="btn-dashboard">dashboard</button>
+    </div>
+    <button class="theme-toggle-btn" id="desktop-theme-btn" onclick="toggleTheme()" aria-label="Theme: Dark — click to switch">
+      <span class="theme-icon">🌙</span>
+      <span class="theme-label">Dark</span>
+    </button>
+    <button class="topbar-import" id="open-import-btn">+ Import</button>
+  </div>
+
+  <!-- ── SEARCHBAR ──────────────────────────────────────────────── -->
+  <div class="searchbar" id="searchbar">
+    <input type="text" id="search-input" class="search-input"
+           placeholder="Omnisearch topics, sections, anywhere in the roadmap…">
+    <div class="hide-done-wrap" id="hide-done-wrap">
+      <span class="hide-done-label">HIDE DONE</span>
+      <div class="toggle-switch" id="hide-done-toggle"><div class="toggle-knob"></div></div>
+    </div>
+  </div>
+
+  <!-- ── SIDEBAR OVERLAY ────────────────────────────────────────── -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ── MAIN AREA ──────────────────────────────────────────────── -->
+  <div class="main-area" id="main-content" tabindex="-1">
+
+    <!-- STAGE SIDEBAR -->
+    <div id="stage-sidebar" class="stage-sidebar">
+      <div class="sidebar-drawer-header">
+        <span class="sidebar-drawer-title">STAGES</span>
+        <button class="sidebar-close-btn" onclick="toggleSidebar()" aria-label="Close">✕</button>
+      </div>
+      <div id="stage-list-inner" class="sidebar-stage-list"></div>
+    </div>
+
+    <!-- TRACKER -->
+    <div id="tracker-content" class="tracker-content">
+      <div id="subject-tabs" class="subject-tabs-wrap"></div>
+      <div class="tracker-body">
+        <div id="section-list" class="section-list"></div>
+        <div id="topics-pane" class="topics-pane"></div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard-content" class="dashboard-content">
+      <div class="dash-title">Progress Dashboard</div>
+      <div class="dash-sub">Tap any card to open that stage</div>
+      <div id="dashboard-grid" class="dashboard-grid"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── IMPORT MODAL ───────────────────────────────────────────────── -->
+<div id="import-modal" class="import-modal-bg">
+  <div class="import-modal-inner" onclick="event.stopPropagation()">
+    <div class="import-modal-title">Import Roadmap JSON</div>
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;line-height:1.7">
+      Paste a JSON array of stages matching the schema:<br>
+      <span class="import-schema">[ { id, label, icon?, color?, storageKey?, subjects: [ { id, subject, icon?, color?, sections: [ { id, title, topics: [] } ] } ] } ]</span>
+    </div>
+    <textarea id="import-textarea" class="import-textarea"
+      placeholder='[ { "id": "my-stage", "label": "My Stage", "subjects": [...] } ]'></textarea>
+    <div id="import-msg" class="import-msg-ok"></div>
+    <div id="import-err" class="import-msg-err"></div>
+    <div id="imported-list-wrap"></div>
+    <div class="import-btn-row">
+      <button class="import-btn-primary" id="do-import-btn">Import</button>
+      <button class="import-btn-cancel" id="close-import-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const BASE_STAGES = [
+  {
+    id: "prereq", label: "Prerequisites", icon: "🧱", color: "#34d399", storageKey: "campusx-prereq-tracker-v1",
+    subjects: [
+      { id: "python", subject: "Python", color: "#60a5fa", icon: "🐍", sections: [
+        { id: "py-core", title: "Core Fundamentals", topics: ["Python syntax, indentation, code style (PEP8)","Variables, data types, type casting","Input/output, comments, docstrings","Control flow: if/else, loops (for, while)","Functions, arguments, return values","Lambda functions","List / dict / set comprehensions"] },
+        { id: "py-ds", title: "Built-in Data Structures", topics: ["Lists","Tuples","Sets","Dictionaries","Strings (immutability, slicing, formatting)"] },
+        { id: "py-pythonic", title: "Pythonic Thinking", topics: ["Iterators and generators","zip, enumerate, map, filter, reduce","Shallow vs deep copy","Mutability vs immutability","*args and **kwargs"] },
+        { id: "py-oop", title: "OOP", topics: ["Classes and objects","Constructors (__init__)","Instance vs class variables","Methods and dunder methods","Inheritance and method overriding","Polymorphism","Encapsulation & abstraction","Dataclasses (@dataclass)"] },
+        { id: "py-err", title: "Error Handling", topics: ["Exceptions (try/except/finally)","Custom exceptions","Common runtime errors"] },
+        { id: "py-mod", title: "Modules & Environments", topics: ["Import system (import, from, as)","Creating modules and packages","Virtual environments (venv, conda)","Dependency management (pip, requirements.txt, poetry)","Understanding __main__"] },
+        { id: "py-file", title: "File Handling & Serialization", topics: ["Reading/writing text files","CSV, JSON handling","Pickle (pros & cons)","Working with directories (os, pathlib)","Logging to files"] },
+        { id: "py-numpy", title: "NumPy", topics: ["Arrays, shapes, dtypes","Broadcasting","Vectorized operations","Linear algebra basics","Random sampling"] },
+        { id: "py-pandas", title: "Pandas", topics: ["Series and DataFrames","Indexing & filtering","GroupBy & aggregation","Missing values handling","Merging & joining","Time-series basics"] },
+        { id: "py-viz", title: "Visualization", topics: ["Matplotlib","Seaborn","Plot types for EDA"] },
+        { id: "py-stdlib", title: "Standard Library", topics: ["os, sys","pathlib","datetime, time","math, random","logging"] },
+        { id: "py-async", title: "Async & Parallel", topics: ["Multithreading vs multiprocessing","async / await","Async I/O basics","When to use each"] },
+        { id: "py-libs", title: "Key Libraries", topics: ["FastAPI","Pydantic"] },
+        { id: "py-prod", title: "Production Mindset", topics: ["Writing clean, readable code","Modular design","Logging & monitoring mindset","Reading other people's code"] },
+      ]},
+      { id: "sql", subject: "SQL", color: "#fbbf24", icon: "🗄️", sections: [
+        { id: "sql-fund", title: "Fundamentals", topics: ["What SQL is & why databases exist","Relational database concepts","Tables, rows, columns","Primary key vs foreign key","Basic SQL syntax & formatting"] },
+        { id: "sql-dml", title: "Data Manipulation", topics: ["INSERT","UPDATE","DELETE","UPSERT (ON CONFLICT)","Transactions (BEGIN, COMMIT, ROLLBACK)"] },
+        { id: "sql-schema", title: "Table Design", topics: ["Creating tables (CREATE TABLE)","Constraints: PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, CHECK","Indexes (conceptual + practical)","Normalization basics (1NF, 2NF, 3NF)","Denormalization (when & why)"] },
+        { id: "sql-query", title: "Core Querying", topics: ["SELECT, FROM, WHERE","DISTINCT","ORDER BY","LIMIT / OFFSET","Aliases (AS)"] },
+        { id: "sql-filter", title: "Filtering & Conditions", topics: ["Comparison operators (=, !=, <, >, BETWEEN)","Logical operators (AND, OR, NOT)","IN, NOT IN","LIKE, ILIKE","IS NULL, IS NOT NULL","CASE WHEN expressions"] },
+        { id: "sql-agg", title: "Aggregations", topics: ["COUNT, SUM, AVG, MIN, MAX","GROUP BY","HAVING","Difference between WHERE and HAVING"] },
+        { id: "sql-joins", title: "Joins", topics: ["INNER JOIN","LEFT JOIN","RIGHT JOIN","FULL OUTER JOIN","CROSS JOIN","Join conditions & join keys","Self joins","Common join pitfalls (duplicate rows)"] },
+        { id: "sql-sub", title: "Subqueries & CTEs", topics: ["Subqueries in SELECT, FROM, WHERE","Correlated subqueries","WITH (Common Table Expressions)","Recursive CTEs (conceptual)","When to use CTEs vs subqueries"] },
+        { id: "sql-window", title: "Window Functions", topics: ["OVER() clause","PARTITION BY","ORDER BY in windows","ROW_NUMBER, RANK, DENSE_RANK","Aggregate window functions","LAG, LEAD","Running totals & moving averages"] },
+        { id: "sql-clean", title: "Data Cleaning", topics: ["String functions (LOWER, UPPER, TRIM, SUBSTRING)","Date/time functions","Type casting (CAST, ::)","Handling missing values","Conditional transformations","Normalizing raw data using SQL"] },
+        { id: "sql-perf", title: "Performance & Optimization", topics: ["Indexes and how they work","Query execution plans (EXPLAIN)","Common slow query patterns","Filtering early vs late","Avoiding unnecessary joins","When SQL beats Pandas"] },
+        { id: "sql-analytics", title: "Analytical SQL", topics: ["Funnel analysis","Cohort analysis","Time-based analysis","User behavior analysis","Feature extraction using SQL","Creating ML-ready datasets"] },
+        { id: "sql-python", title: "SQL + Python", topics: ["Running SQL from Python","sqlite3, psycopg2, sqlalchemy","Pandas + SQL workflows","Writing parameterized queries","Avoiding SQL injection"] },
+      ]},
+      { id: "math", subject: "Mathematics", color: "#f472b6", icon: "∑", sections: [
+        { id: "math-la", title: "Linear Algebra", topics: ["Scalars, vectors, matrices, tensors","Vector and matrix operations","Dot product & geometric interpretation","Matrix multiplication","Identity, transpose, inverse","Rank of a matrix","Systems of linear equations","Linear transformations","Column space & null space (intuition)","Eigenvalues & eigenvectors","Orthogonality","Norms & distances (L1, L2)"] },
+        { id: "math-calc", title: "Calculus", topics: ["Functions and graphs","Limits (intuition only)","Derivatives and gradients","Partial derivatives","Chain rule (very important)","Gradient as direction of steepest descent","Local vs global minima","Convex vs non-convex functions","Gradient Descent","Learning rate intuition","Cost / loss functions","Saddle points","Vanishing & exploding gradients (intuition)"] },
+        { id: "math-prob", title: "Probability Theory", topics: ["Random variables","Discrete vs continuous variables","Probability distributions","PMF, PDF, CDF","Expectation & variance","Bernoulli, Binomial, Normal, Uniform, Poisson","Independence & conditional probability","Bayes' theorem","Likelihood vs probability"] },
+        { id: "math-stats", title: "Statistics", topics: ["Population vs sample","Measures of central tendency","Measures of dispersion","Covariance","Correlation","Bias & variance","Sampling techniques","Central Limit Theorem (intuition)","Law of Large Numbers","Outliers & robustness"] },
+        { id: "math-info", title: "Information Theory", topics: ["Entropy","Cross-entropy","KL divergence","Information gain","Why cross-entropy is used in classification"] },
+        { id: "math-geom", title: "Geometry & Distance", topics: ["Euclidean distance","Manhattan distance","Cosine similarity","Angle between vectors","High-dimensional intuition (curse of dimensionality)"] },
+        { id: "math-decomp", title: "Matrix Decomposition", topics: ["Eigen decomposition","Singular Value Decomposition (SVD)","PCA math intuition","Dimensionality reduction rationale"] },
+      ]},
+      { id: "software", subject: "Software Essentials", color: "#34d399", icon: "⚙️", sections: [
+        { id: "sw-git", title: "Version Control", topics: ["Git fundamentals","Branching and merging","Pull requests","Code reviews","Merge conflict resolution","GitHub workflows"] },
+        { id: "sw-env", title: "Dev Environment", topics: ["Virtual environments","Dependency management","Environment variables","Project structure","Reproducible setups"] },
+        { id: "sw-api", title: "APIs & Services", topics: ["REST APIs","HTTP methods & status codes","JSON handling","Authentication mechanisms","Error handling","Rate limiting"] },
+      ]},
+      { id: "cloud", subject: "Cloud Fundamentals", color: "#a78bfa", icon: "☁️", sections: [
+        { id: "cloud-basics", title: "Cloud Basics", topics: ["What cloud computing is","Cloud service models (IaaS, PaaS, SaaS)","Public, private, hybrid cloud","Regions, availability zones","Shared responsibility model"] },
+        { id: "cloud-core", title: "Core Services", topics: ["Compute services","Storage services","Networking services","Managed databases","Managed AI/ML services"] },
+        { id: "cloud-net", title: "Networking & Security", topics: ["Virtual networks (VPC/VNet)","Subnets, IP addressing","Firewalls and security groups","DNS, Load balancers","IAM: Roles and policies","Authentication vs authorization","Secrets management"] },
+        { id: "cloud-docker", title: "Containers", topics: ["Docker fundamentals","Container images","Container registries"] },
+        { id: "cloud-ai", title: "Cloud for AI", topics: ["GPU and accelerator instances","Batch vs real-time inference","Model deployment patterns","Data storage for ML pipelines"] },
+        { id: "cloud-cost", title: "Cost & DevOps", topics: ["Pay-as-you-go pricing","Cost estimation & budgeting","Infrastructure as code (conceptual)","CI/CD pipelines (conceptual)","Environment separation (dev, staging, prod)","AWS, GCP, Azure awareness"] },
+      ]},
+      { id: "ai-coding", subject: "AI Coding", color: "#fb923c", icon: "🤖", sections: [
+        { id: "aic-basics", title: "AI-Assisted Dev", topics: ["What AI coding assistants are","Code generation vs code completion","Prompting for code","Understanding AI-generated code"] },
+        { id: "aic-prompt", title: "Prompting for Code", topics: ["Writing clear coding prompts","Providing context and constraints","Iterative prompting","Asking for explanations and refactors"] },
+        { id: "aic-read", title: "Reading & Validating", topics: ["Understanding unfamiliar code","Identifying logical errors","Identifying security issues","Validating outputs","Testing AI-generated code"] },
+        { id: "aic-refactor", title: "Refactoring & Debugging", topics: ["Code simplification & readability","Performance optimization","Modularization & converting scripts to packages","Explaining errors and stack traces","Hypothesis-driven debugging","Fixing edge cases"] },
+        { id: "aic-ml", title: "AI for ML Code", topics: ["Writing data preprocessing code","Feature engineering code","Model training pipelines","Evaluation code","Experiment scripts"] },
+        { id: "aic-limits", title: "Limitations", topics: ["Hallucinated APIs","Outdated patterns","Overconfidence in incorrect code","Dependency mismatches"] },
+      ]},
+    ]
+  },
+  {
+    id: "ml", label: "Machine Learning", icon: "📐", color: "#60a5fa", storageKey: "campusx-ml-tracker-v1",
+    subjects: [
+      { id: "ml-fund", subject: "ML Fundamentals", color: "#60a5fa", icon: "📐", sections: [
+        { id: "mlf-what", title: "What ML Really Is", topics: ["What is Machine Learning (vs traditional programming)","Why ML works: pattern discovery from data","ML vs Statistics vs Rules-based systems","When not to use ML"] },
+        { id: "mlf-types", title: "Types of ML", topics: ["Supervised learning","Unsupervised learning","Semi-supervised learning","Self-supervised learning (conceptual intro)","Reinforcement learning (high-level only)","Batch learning vs online learning"] },
+        { id: "mlf-formulate", title: "Problem Formulation", topics: ["Regression vs classification","Binary vs multi-class vs multi-label","Clustering vs density estimation","Anomaly / outlier detection","Ranking & recommendation problems"] },
+        { id: "mlf-split", title: "Train/Val/Test Split", topics: ["Why splitting data matters","Train vs validation vs test sets","Data leakage (very important)","Hold-out validation","Cross-validation (conceptual)","When test data should be touched (almost never)"] },
+        { id: "mlf-model", title: "Model Concept", topics: ["What is a model?","Parameters vs hyperparameters","Hypothesis space intuition","Decision boundaries (visual intuition)","Linear vs non-linear models (conceptual)"] },
+        { id: "mlf-loss", title: "Loss Functions", topics: ["What is a loss function?","Loss vs error vs metric","Regression losses (MAE, MSE – intuition)","Classification losses (log loss – intuition)","Why models minimize loss, not accuracy","Average loss over dataset"] },
+        { id: "mlf-eval", title: "Evaluation Metrics", topics: ["Regression metrics: MAE, MSE, RMSE, R²","Accuracy","Precision, recall","F1-score","Confusion matrix intuition","Why accuracy is often a bad metric","Choosing the right metric for the problem"] },
+        { id: "mlf-bv", title: "Bias–Variance Tradeoff", topics: ["Bias vs variance intuition","Underfitting vs overfitting","Model complexity vs data size","How bias–variance shows up in practice","Why this tradeoff never disappears"] },
+        { id: "mlf-workflow", title: "End-to-End ML Workflow", topics: ["Problem definition","Data collection","Data understanding","Train–validate loop","Model selection","Final evaluation","Deployment awareness (high-level)"] },
+        { id: "mlf-pitfalls", title: "Common ML Pitfalls", topics: ["Data leakage","Improper evaluation","Ignoring baseline models","Blindly trusting metrics"] },
+      ]},
+      { id: "feat-eng", subject: "Feature Engineering", color: "#fbbf24", icon: "🔧", sections: [
+        { id: "fe-what", title: "What FE Really Is", topics: ["What is a feature?","Raw data vs features","Feature engineering vs feature selection","Why models don't understand raw data","Feature engineering as signal extraction","When FE matters more than algorithms"] },
+        { id: "fe-understand", title: "Understanding Data", topics: ["Feature types: Numerical, Categorical, Ordinal, Text, Date & time","Continuous vs discrete variables","Cardinality (low vs high)","Feature distributions","Target leakage awareness"] },
+        { id: "fe-missing", title: "Missing Values", topics: ["Why missing values occur","Missing completely at random vs not random","Deletion strategies (row/column)","Mean / median / mode imputation","Constant value imputation","Flagging missingness as a feature","When not to impute"] },
+        { id: "fe-encoding", title: "Encoding Categoricals", topics: ["Why models can't handle categories directly","Label encoding (when it works, when it breaks)","One-hot encoding","Dummy variable trap","Ordinal encoding","High-cardinality categorical features (conceptual)","Encoding leakage risks"] },
+        { id: "fe-scaling", title: "Feature Scaling", topics: ["Why scale features?","Feature magnitude vs importance","Standardization (z-score)","Min–max scaling","Robust scaling (intuition)","When scaling is unnecessary","Scaling before vs after train-test split (critical)"] },
+        { id: "fe-outliers", title: "Handling Outliers", topics: ["What is an outlier?","Outliers vs rare but valid values","Visual detection (boxplots, scatter plots)","Statistical detection (intuition)","Capping / flooring","Removal vs transformation","When outliers help the model"] },
+        { id: "fe-transform", title: "Feature Transformation", topics: ["Why transform features?","Log transformation","Power transformations (intuition)","Handling skewed distributions","Non-linear transformations","Stabilizing variance","Interpretability tradeoffs"] },
+        { id: "fe-create", title: "Feature Creation", topics: ["Domain-driven feature creation","Ratios and differences","Aggregated features (mean, count, sum)","Interaction features (feature × feature)","Binning / discretization","Polynomial features (intuition)","Temporal feature creation (high-level)"] },
+        { id: "fe-datetime", title: "Date & Time FE", topics: ["Extracting year, month, day, weekday","Cyclical features (sin/cos intuition)","Time since / time until features","Lag features (conceptual)","Rolling window features (intuition)","Avoiding time-based leakage"] },
+        { id: "fe-text", title: "Text FE (Intro)", topics: ["Why text needs special handling","Text cleaning basics","Tokenization (conceptual)","Bag of Words intuition","TF-IDF intuition","When feature engineering gives way to embeddings"] },
+        { id: "fe-selection", title: "Feature Selection", topics: ["Why fewer features can be better","Redundant vs informative features","Correlation-based filtering","Variance thresholding (intuition)","Domain-driven selection","Selection vs dimensionality reduction (conceptual)"] },
+        { id: "fe-pipeline", title: "FE Pipelines", topics: ["Why pipelines matter","Train-test consistency","Fit vs transform distinction","Order of operations","Reproducibility","Avoiding leakage via pipelines"] },
+        { id: "fe-pitfalls", title: "FE Pitfalls", topics: ["Data leakage through features","Encoding using full dataset","Scaling using test data","Over-engineering features","Feature explosion","Ignoring domain knowledge"] },
+      ]},
+      { id: "ml-algo", subject: "ML Algorithms", color: "#f472b6", icon: "⚡", sections: [
+        { id: "algo-linear", title: "Linear Models", topics: ["Linear Regression","Multiple Linear Regression","Polynomial Regression","Ridge Regression","Lasso Regression","Elastic Net"] },
+        { id: "algo-clf", title: "Classification", topics: ["Logistic Regression","k-Nearest Neighbors (kNN)","Naive Bayes — Gaussian","Naive Bayes — Multinomial","Naive Bayes — Bernoulli"] },
+        { id: "algo-tree", title: "Tree-Based Models", topics: ["Decision Tree (Classification)","Decision Tree (Regression)"] },
+        { id: "algo-ensemble", title: "Ensemble Algorithms", topics: ["Random Forest","Extra Trees (Extremely Randomized Trees)"] },
+        { id: "algo-boost", title: "Boosting Algorithms", topics: ["AdaBoost","Gradient Boosting","XGBoost","LightGBM","CatBoost"] },
+        { id: "algo-svm", title: "Support Vector Machines", topics: ["Support Vector Classifier (SVC)","Support Vector Regressor (SVR)"] },
+        { id: "algo-unsup", title: "Unsupervised Learning", topics: ["K-Means","Hierarchical Clustering","DBSCAN"] },
+        { id: "algo-dim", title: "Dimensionality Reduction", topics: ["Principal Component Analysis (PCA)","Kernel PCA","Linear Discriminant Analysis (LDA)","t-SNE"] },
+        { id: "algo-anomaly", title: "Anomaly Detection", topics: ["Isolation Forest","One-Class SVM","Local Outlier Factor (LOF)"] },
+        { id: "algo-prob", title: "Probabilistic & Ranking", topics: ["Gaussian Mixture Models (GMM)","Matrix Factorization","SVD for Recommendation"] },
+      ]},
+      { id: "ml-advanced", subject: "ML Advanced", color: "#34d399", icon: "🚀", sections: [
+        { id: "adv-hpo", title: "Hyperparameter Optimization", topics: ["Grid search","Random search","Bayesian optimization"] },
+        { id: "adv-eval", title: "Model Evaluation", topics: ["Cross-validation strategies","Stratified sampling","Time-series validation","Nested cross-validation"] },
+        { id: "adv-imbalance", title: "Imbalanced Data", topics: ["Class imbalance problem","Oversampling","Undersampling","SMOTE","Class weighting","Threshold moving"] },
+        { id: "adv-ensemble", title: "Ensemble Theory", topics: ["Bagging vs boosting","Stacking","Blending","Voting classifiers"] },
+        { id: "adv-xai", title: "Interpretability & XAI", topics: ["Model interpretability vs explainability","Global vs local explanations","Feature importance","Partial dependence plots","SHAP","LIME"] },
+        { id: "adv-select", title: "Model Selection", topics: ["Bias vs variance driven selection","Metric-driven model choice","Statistical significance testing"] },
+        { id: "adv-scale", title: "Scaling ML", topics: ["Training on large datasets","Incremental / online learning","Distributed training (conceptual)","Memory vs compute tradeoffs"] },
+      ]},
+      { id: "ml-projects", subject: "End-to-End Projects", color: "#a78bfa", icon: "🏗️", sections: [
+        { id: "proj-rec", title: "Recommendation Systems", topics: ["Movie Recommendation System (Netflix-style)","E-commerce Product Recommendation (Amazon-style)","Online Course Recommendation","News / Content Feed Ranking","Music Playlist Recommendation"] },
+        { id: "proj-pred", title: "Prediction & Forecasting", topics: ["House Price Prediction","Stock Price Movement Prediction","Sales Forecasting System","Demand Forecasting for Inventory","Energy Consumption Forecasting"] },
+        { id: "proj-clf", title: "Classification Systems", topics: ["Spam Email Detection","Credit Card Fraud Detection","Loan Default Prediction","Customer Churn Prediction","Fake News Detection"] },
+        { id: "proj-nlp", title: "NLP Systems", topics: ["Sentiment Analysis System","Resume Screening System","News Article Categorization","Text Similarity / Duplicate Detection"] },
+        { id: "proj-anomaly", title: "Anomaly Detection", topics: ["Fraud Detection System","Network Intrusion Detection","Insurance Claim Anomaly Detection","Manufacturing Fault Detection"] },
+        { id: "proj-biz", title: "Business Intelligence", topics: ["Customer Segmentation System","Market Basket Analysis","Customer Lifetime Value Prediction","User Behavior Analytics"] },
+        { id: "proj-interview", title: "Interview Classics ⭐", topics: ["House Price Prediction","Titanic Survival Prediction","Customer Churn Prediction","Credit Risk Modeling","Recommendation System"] },
+      ]},
+    ]
+  },
+  {
+    id: "specialization", label: "Specializations", icon: "🎯", color: "#22d3ee", storageKey: "campusx-nlp-cv-tsf-tracker-v1",
+    subjects: [
+      { id: "nlp", subject: "NLP", color: "#22d3ee", icon: "💬", sections: [
+        { id: "nlp-preprocess", title: "Text Preprocessing", topics: ["Text normalization (lowercasing, unicode)","Removing punctuation, numbers, special characters","Whitespace normalization","Stopword removal","Handling contractions","Word tokenization","Sentence tokenization","Stemming","Lemmatization","Handling emojis & emoticons","Handling URLs, emails, mentions","Handling spelling variations","Language detection (basic)"] },
+        { id: "nlp-represent", title: "Text Representation", topics: ["Bag of Words (BoW)","N-grams","Term Frequency (TF)","Inverse Document Frequency (IDF)","TF-IDF","Binary vectors","Hashing trick","Vocabulary creation","Sparse vs dense representations","Dimensionality considerations"] },
+        { id: "nlp-algos", title: "Traditional Algorithms", topics: ["Naive Bayes for text classification","Logistic Regression for text","Support Vector Machines for text","Boosting Algorithms for text"] },
+        { id: "nlp-pipeline", title: "NLP Pipeline", topics: ["Problem formulation in NLP","Text data collection","Train–validation–test split for text","Vocabulary fitting vs transformation","Feature extraction workflow","Model training","Evaluation","Inference pipeline","Handling unseen words (OOV)","Pipeline reproducibility","Avoiding data leakage in NLP"] },
+      ]},
+      { id: "cv", subject: "Computer Vision", color: "#fb923c", icon: "👁️", sections: [
+        { id: "cv-basics", title: "Image Basics", topics: ["Image reading & writing (OpenCV / PIL)","Grayscale conversion","Color space conversion: RGB ↔ Grayscale","Color space conversion: RGB ↔ HSV","Color space conversion: BGR ↔ RGB","Image resizing — Nearest Neighbor interpolation","Image resizing — Bilinear interpolation","Image resizing — Bicubic interpolation","Image normalization","Binary thresholding","Adaptive thresholding"] },
+        { id: "cv-features", title: "Feature Detection", topics: ["Edge Detection — Sobel Operator","Edge Detection — Prewitt Operator","Edge Detection — Canny Edge Detector","Corner Detection — Harris Corner Detector","Corner Detection — Shi–Tomasi","Corner Detection — FAST","Feature Descriptors — SIFT","Feature Descriptors — SURF","Feature Descriptors — ORB","Feature Descriptors — BRIEF"] },
+        { id: "cv-transform", title: "Image Transformation", topics: ["Geometric: Translation, Scaling, Rotation","Geometric: Affine Transformation","Geometric: Perspective (Homography) Transformation","Filtering: Gaussian Blur, Median Blur, Bilateral Filter","Morphological: Erosion, Dilation, Opening, Closing","Intensity: Histogram Equalization"] },
+        { id: "cv-pipeline", title: "CV Pipeline", topics: ["Image loading, resizing, color conversion","Noise reduction & contrast enhancement","Edge & corner feature extraction","Local descriptors (SIFT, SURF, ORB)","Shape descriptors (HOG)","Feature vector construction & Bag of Visual Words","Dimensionality reduction (PCA)","ML Models: Logistic Regression, Linear SVM, Kernel SVM, kNN","ML Models: Decision Tree, Random Forest, Naive Bayes, GMM","Evaluation: Accuracy, Precision/Recall, Confusion Matrix"] },
+      ]},
+      { id: "tsf", subject: "Time Series", color: "#a78bfa", icon: "📈", sections: [
+        { id: "ts-analysis", title: "Time Series Analysis", topics: ["What is time-series data","Time index & frequency","Components: Trend, Seasonality, Cyclicity, Noise","Additive vs multiplicative series","Stationarity & non-stationarity","Autocorrelation","Partial autocorrelation","Lag plots & rolling statistics","Time-series decomposition","Structural breaks & irregular time series"] },
+        { id: "ts-classical", title: "Classical Forecasting", topics: ["Naive forecasting, Mean forecasting, Drift method","Moving average","Simple Exponential Smoothing (SES)","Holt's Linear Trend method","Holt-Winters Exponential Smoothing","Autoregressive (AR) models","Moving Average (MA) models","ARMA models","ARIMA models","Seasonal ARIMA (SARIMA)","Order selection intuition (p, d, q)"] },
+        { id: "ts-feateng", title: "Feature Engineering for TS", topics: ["Lag features","Rolling window features","Expanding window features","Differencing & seasonal differencing","Trend features & seasonal indicators","Date-time features (Day, Week, Month, Quarter)","Cyclical encoding (sin / cos)","Avoiding look-ahead leakage","Supervised learning formulation"] },
+        { id: "ts-eval", title: "Evaluation Techniques", topics: ["Train–test split for time series","Walk-forward validation","Rolling & expanding window validation","One-step vs multi-step forecasting","Error metrics: MAE, MSE, RMSE, MAPE, SMAPE","Baseline comparison & residual diagnostics"] },
+      ]},
+    ]
+  },
+  {
+    id: "dl", label: "Deep Learning", icon: "🧠", color: "#f87171", storageKey: "campusx-dl-tracker-v1",
+    subjects: [
+      { id: "dl-foundations", subject: "Foundations of NNs", color: "#f87171", icon: "🧠", sections: [
+        { id: "nn-core", title: "Neural Network Basics", topics: ["Neurons, layers, parameters (weights/biases)","Forward pass & prediction","Activation: Sigmoid, Tanh","Activation: ReLU, Leaky ReLU, ELU, GELU","Activation: Softmax","Loss: MSE, MAE","Loss: Cross-entropy","Loss: Hinge loss (conceptual)"] },
+        { id: "nn-backprop", title: "Backpropagation & Gradients", topics: ["Backpropagation (chain rule intuition + computational graph)","Gradient flow intuition","Vanishing/exploding gradients (why it happens)","Universal approximation (intuition)","Model capacity & depth vs width","Why ANNs overfit"] },
+      ]},
+      { id: "dl-optim", subject: "Optimization", color: "#fb923c", icon: "⚙️", sections: [
+        { id: "opt-core", title: "Optimization Core", topics: ["Batch vs mini-batch vs SGD","Learning rate & schedules: Step decay, Cosine decay, Warmup","Momentum & Nesterov momentum","Adagrad","RMSProp","Adam","AdamW (weight decay distinction)"] },
+        { id: "opt-stability", title: "Initialization & Stability", topics: ["Weight initialization: Xavier/Glorot","Weight initialization: He initialization","Gradient clipping","Batch Normalization (BN)","Dropout"] },
+        { id: "opt-practice", title: "Training Practice", topics: ["Early stopping","Regularization: L1/L2","Regularization: Weight decay","Hyperparameter tuning: learning rate, batch size, depth"] },
+      ]},
+      { id: "dl-cnn", subject: "CNN & Transfer Learning", color: "#fbbf24", icon: "🖼️", sections: [
+        { id: "cnn-core", title: "CNN Core", topics: ["Convolution operation (filters/kernels)","Stride & padding","Feature maps","Pooling (max/avg)","Receptive field intuition","Why CNNs are translation invariant"] },
+        { id: "cnn-arch", title: "Modern CNN Architectures", topics: ["Residual connections (ResNet)","Inception modules (conceptual)","Depthwise separable convolutions (MobileNet)"] },
+        { id: "cnn-transfer", title: "Transfer Learning", topics: ["Pretrained backbone concept","Feature extractor vs fine-tuning","Freezing/unfreezing layers","Domain shift considerations","Data augmentation: flips, crops, color jitter"] },
+        { id: "cnn-vit", title: "Vision Transformers (ViT)", topics: ["Why ViT exists (global attention vs local conv)","Patch embedding concept","CLS token concept","Positional embeddings (vision version)","ViT vs CNN tradeoffs"] },
+      ]},
+      { id: "dl-seq", subject: "Sequence Models", color: "#34d399", icon: "🔁", sections: [
+        { id: "seq-rnn", title: "RNN Family", topics: ["Sequential data modeling intuition","RNNs (unrolling through time)","LSTM","GRU","Bidirectional RNNs","Deep RNNs"] },
+        { id: "seq-seq2seq", title: "Seq2Seq & Attention", topics: ["Encoder–decoder architecture","Context vector bottleneck problem","Teacher forcing","Beam search (conceptual)","Bahdanau Attention (Additive Attention)","Luong Attention (Multiplicative / Dot-Product Attention)"] },
+      ]},
+      { id: "dl-transformer", subject: "Transformer", color: "#818cf8", icon: "⚡", sections: [
+        { id: "trans-core", title: "Transformer Architecture", topics: ["Why Transformers replaced RNNs","Self-attention","Scaled dot-product attention","Multi-head attention","Positional encoding / embeddings","Feed-forward network block (FFN)","Residual connections + LayerNorm","Encoder stack vs decoder stack","Decoder masking (causal mask)","Cross-attention (encoder-decoder attention)","Training objective intuition (next-token prediction)","Complexity intuition (why attention is expensive)"] },
+        { id: "trans-variants", title: "Transformer Variants", topics: ["Encoder-only (BERT-style)","Decoder-only (GPT-style)","Encoder-decoder (T5-style)"] },
+      ]},
+      { id: "dl-unsup", subject: "Unsupervised DL", color: "#f472b6", icon: "🎲", sections: [
+        { id: "unsup-ae", title: "Autoencoders", topics: ["Autoencoders","Denoising autoencoders","Sparse autoencoders","Variational Autoencoders (VAE) — high-level","Latent space intuition","Reconstruction vs generation"] },
+        { id: "unsup-gan", title: "GANs", topics: ["GAN setup: Generator vs Discriminator","Adversarial training intuition","Mode collapse (conceptual)","Training instability (conceptual)","DCGAN","Conditional GAN (cGAN)","CycleGAN","StyleGAN (conceptual)"] },
+      ]},
+    ]
+  },
+  {
+    id: "practical-dl", label: "Practical DL", icon: "🔥", color: "#fb923c", storageKey: "campusx-practical-dl-tracker-v1",
+    subjects: [
+      { id: "pytorch", subject: "PyTorch", color: "#fb923c", icon: "🔥", sections: [
+        { id: "pt-basics", title: "PyTorch Basics", topics: ["What PyTorch is","Tensor fundamentals","Tensor creation methods","Tensor shapes and dtypes","CPU vs GPU tensors"] },
+        { id: "pt-ops", title: "Tensor Operations", topics: ["Indexing and slicing","Broadcasting","Arithmetic operations","Matrix operations","Reduction operations"] },
+        { id: "pt-autograd", title: "Autograd & Computation Graph", topics: ["Automatic differentiation","requires_grad","Backpropagation","Gradient tracking","Detaching tensors"] },
+        { id: "pt-blocks", title: "NN Building Blocks", topics: ["torch.nn module","Layers (Linear, Conv, RNN basics)","Activation functions","Loss functions","Parameter initialization"] },
+        { id: "pt-model", title: "Model Definition", topics: ["nn.Module","Defining custom models","Forward pass","Model parameters","Model summary and inspection"] },
+        { id: "pt-loop", title: "Training Loop", topics: ["Forward pass","Loss computation","Backward pass","Optimizer step","Zeroing gradients"] },
+        { id: "pt-optim", title: "Optimizers & Schedulers", topics: ["SGD","Momentum","Adam","Learning rate scheduling"] },
+        { id: "pt-data", title: "Datasets & DataLoaders", topics: ["Custom datasets","Built-in datasets","DataLoader","Batching and shuffling","Data augmentation basics"] },
+        { id: "pt-eval", title: "Model Evaluation", topics: ["Training vs evaluation mode","Validation loops","Metrics computation","Overfitting detection"] },
+        { id: "pt-gpu", title: "GPU & Performance", topics: ["CUDA basics","Moving data and models to GPU","Mixed precision training","Performance bottlenecks"] },
+        { id: "pt-save", title: "Saving & Loading", topics: ["Saving model weights","Loading checkpoints","Saving optimizers","Model versioning"] },
+        { id: "pt-best", title: "Best Practices", topics: ["Modular model design","Clean training loops","Separation of data, model, training logic"] },
+      ]},
+      { id: "nlp-dl", subject: "NLP with DL", color: "#22d3ee", icon: "💬", sections: [
+        { id: "nlpdl-embed", title: "Embeddings", topics: ["Using word embeddings for NLP tasks","Pretrained embeddings (Word2Vec, GloVe, FastText)","Choosing embedding dimensions","Handling out-of-vocabulary words","Using embeddings as model inputs"] },
+        { id: "nlpdl-seq", title: "Sequence Modeling", topics: ["Text classification using RNN","Text classification using LSTM","Sentiment analysis using RNN / LSTM","Handling variable-length text inputs","Using bidirectional RNN / LSTM for NLP"] },
+        { id: "nlpdl-seq2seq", title: "Seq2Seq NLP", topics: ["Language translation using encoder–decoder models","Text generation using encoder–decoder models","Applying teacher forcing during training","Using attention in Seq2Seq models","Improving generation using beam search"] },
+        { id: "nlpdl-trans", title: "Transformers for NLP", topics: ["Text classification using Transformers","Sequence labeling using Transformers","Language translation using Transformers","Text generation using Transformers","Fine-tuning pretrained Transformer models"] },
+      ]},
+      { id: "cv-dl", subject: "CV with DL", color: "#fb923c", icon: "👁️", sections: [
+        { id: "cvdl-clf", title: "Image Classification", topics: ["Train CNN-based image classifiers","Apply data augmentation for classification","Handle class imbalance in image datasets","Use transfer learning for classification","Evaluate with accuracy, top-k, confusion matrix"] },
+        { id: "cvdl-tl", title: "Transfer Learning", topics: ["Use pretrained backbones (ResNet/EfficientNet/MobileNet)","Feature extraction vs fine-tuning","Layer freezing strategies","Domain shift handling","Training from scratch vs fine-tuning comparison"] },
+        { id: "cvdl-det-basics", title: "Object Detection — Basics", topics: ["Bounding boxes and annotations","Anchor-based vs anchor-free detection","IoU (Intersection over Union)","Non-Max Suppression (NMS)","Detection metrics: mAP, precision/recall"] },
+        { id: "cvdl-det-models", title: "Object Detection — Models", topics: ["R-CNN, Fast R-CNN, Faster R-CNN","SSD","YOLO family — YOLOv3 / YOLOv5 / YOLOv8","RetinaNet (focal loss idea)"] },
+        { id: "cvdl-seg", title: "Image Segmentation", topics: ["Semantic, instance, panoptic segmentation","FCN (conceptual)","U-Net (must-know)","Mask R-CNN (must-know)","DeepLab (high-level)","IoU / Jaccard Index & Dice coefficient"] },
+        { id: "cvdl-vit", title: "Vision Transformers", topics: ["ViT for classification","Patch embeddings and image tokens","CNN vs ViT tradeoffs","Swin Transformer (high-level)","DETR (conceptual mention)"] },
+      ]},
+      { id: "tsf-dl", subject: "Time Series DL", color: "#a78bfa", icon: "📈", sections: [
+        { id: "tsdl-frame", title: "DL Framing of TS", topics: ["Time series as sequence learning problems","Sequence-to-one forecasting","Sequence-to-sequence forecasting"] },
+        { id: "tsdl-data", title: "Data Preparation", topics: ["Sliding window sequences","Lookback and forecast horizon","Input–output tensor shapes","Multivariate time series inputs"] },
+        { id: "tsdl-models", title: "Core Neural Models", topics: ["Recurrent Neural Networks (RNN)","Long Short-Term Memory (LSTM)","Gated Recurrent Units (GRU)","1D convolutions for sequences","Temporal attention (awareness)","Transformer-based forecasting (awareness)"] },
+        { id: "tsdl-train", title: "Training & Output Strategies", topics: ["Training loops for sequence models","Handling long sequences","Overfitting in time series DL","One-step & multi-step forecasting","Direct vs recursive prediction","Comparing DL models with classical baselines"] },
+      ]},
+    ]
+  },
+  {
+    id: "mle-track", label: "ML Engineering", icon: "🏗️", color: "#f472b6", storageKey: "campusx-mle-track-v1",
+    subjects: [
+      { id: "ml-system-design", subject: "ML System Design", color: "#f472b6", icon: "🏗️", sections: [
+        { id: "msd-formulate", title: "1. Problem Formulation", topics: ["Business goals vs ML proxy metrics","When ML is not the right solution","Success metrics vs optimization metrics","Cost of false positives vs false negatives","Classification vs regression vs ranking vs generation","Batch prediction vs online prediction","Single model vs multi-stage pipeline","Human-in-the-loop vs fully automated systems","Latency, throughput, cost, privacy constraints","Data availability assumptions","Label delay and label quality","What is inside the ML system vs rules/heuristics?","What feedback signals exist?"] },
+        { id: "msd-data", title: "2. Data System Design", topics: ["First-party vs third-party data","Logged data vs user-generated data","Static vs streaming data","What to log (features, predictions, outcomes)","Schema design for ML logs","Handling delayed and missing labels","Avoiding data leakage at collection time","Data lakes vs data warehouses","Immutable datasets & dataset versioning","Data validation checks","Distribution monitoring","Covariate drift vs label drift vs concept drift","Drift detection strategies"] },
+        { id: "msd-features", title: "3. Feature System Design", topics: ["Static vs dynamic features","Real-time vs batch features","Aggregations, windows, freshness","Feature reuse across models","Feature coupling problems","Causes of training–serving skew","Feature computation mismatches","Time-travel correctness","Why feature stores exist","Online vs offline feature stores","Freshness vs latency tradeoffs","Caching strategies"] },
+        { id: "msd-modeling", title: "4. Modeling Strategy", topics: ["Simple models vs complex models","When deep learning is overkill","Ensemble vs single model systems","Offline training vs continual training","Retraining frequency","Cold start handling","Bootstrapping labels","When interpretability is required","Debugging models in production","Model versioning & backward compatibility","Rollbacks"] },
+        { id: "msd-eval", title: "5. Evaluation Strategy", topics: ["Train/validation/test splits — time-aware","Leakage-resistant evaluation","Proxy metrics vs business metrics","Threshold selection","A/B testing for ML","Shadow deployments","Canary releases","Slice-based evaluation","Error analysis workflows","Identifying systematic failures"] },
+        { id: "msd-serving", title: "6. Serving", topics: ["Batch prediction systems","Online inference systems","Streaming inference","Model size vs latency","Hardware considerations","Caching predictions","Blue-green deployments","Canary releases","Shadow models","Fallback strategies","Graceful degradation","Inference cost drivers","Model compression"] },
+        { id: "msd-monitor", title: "7. Feedback & Monitoring", topics: ["Data distribution monitoring","Prediction distribution monitoring","Label quality monitoring","Alert fatigue — defining meaningful thresholds","Explicit vs implicit feedback","Feedback delay and feedback bias","Scheduled retraining triggers","Event-based retraining triggers","Bias detection","Auditing predictions","Responsible ML practices"] },
+      ]},
+      { id: "mlops", subject: "MLOps", color: "#fb923c", icon: "⚙️", sections: [
+        { id: "mlops-data", title: "1. Data Versioning", topics: ["Reproducibility failures & training-serving mismatches","What to version: raw data, processed data, splits, feature logic","Immutable datasets, hash-based versioning","Metadata-based lineage","Dataset → features → model lineage","DVC","LakeFS","Delta Lake","S3 / GCS / Azure Blob"] },
+        { id: "mlops-exp", title: "2. Experiment Tracking", topics: ["Code + data + parameters + metrics = experiment","Why notebooks alone don't scale","Tracking: hyperparameters, metrics, artifacts, environment","Comparing experiments (stability vs peak performance)","Team visibility & auditability","MLflow","Weights & Biases","Neptune","TensorBoard"] },
+        { id: "mlops-pipeline", title: "3. ML Pipelines", topics: ["Hidden dependencies in manual training","Pipeline stages: ingest → validate → FE → train → eval → package","DAGs, idempotency, retries and failures","Scheduled vs event-driven retraining","Pipeline debugging: partial reruns, cache invalidation","Airflow","Kubeflow Pipelines","Prefect","Dagster","DVC"] },
+        { id: "mlops-serving", title: "4. Model Serving", topics: ["Batch vs online vs streaming inference","Model as file vs model as service","Shadow deployment, canary release, blue-green deployment","CPU vs GPU inference, cold starts & autoscaling","Rule-based fallbacks","FastAPI","BentoML","KServe","TorchServe","Triton Inference Server"] },
+        { id: "mlops-docker", title: "5. Dockerization", topics: ["'Works on my machine' problem","Base image selection, CPU vs GPU images","Image size optimization","Dockerizing training vs serving","Build-time vs run-time dependencies","Secrets management in containers","Non-root containers & vulnerability scanning","Docker","Docker Compose"] },
+        { id: "mlops-cicd", title: "6. CI/CD", topics: ["Code checks, data validation checks, pipeline unit tests","Model validation gates & approval workflows","Dev → staging → prod promotion","Champion–challenger setups","When to rollback (code vs model vs data)","GitHub Actions","GitLab CI","Jenkins","Argo CD","Terraform"] },
+        { id: "mlops-monitor", title: "7. Monitoring", topics: ["Input data & prediction distribution monitoring","Latency & error monitoring","Statistical drift detection","Window-based comparison & alert thresholds","Delayed labels & proxy metrics","Silent failure detection","Evidently AI","WhyLabs","Arize AI","Prometheus + Grafana"] },
+        { id: "mlops-retrain", title: "8. Retraining", topics: ["Time-based, drift-based, performance-based retraining","Scheduled, event-driven, human-in-the-loop triggers","Pipeline reuse for automated retraining","Safe deployment after retraining","Regression checks","Label bias & selection bias in feedback loops","Self-reinforcing predictions"] },
+      ]},
+      { id: "mlops-dl", subject: "MLOps for DL", color: "#a78bfa", icon: "🧠", sections: [
+        { id: "mlopsdl-why", title: "0. Why DL MLOps Is Different", topics: ["Training takes hours/days, hardware failures are normal","Models don't fit in memory","Inference cost dominates business cost","GPU-first systems vs classical ML","Checkpoints as first-class artifacts","When you need this layer (CNNs, ViTs, large NLP, multimodal)"] },
+        { id: "mlopsdl-dist", title: "1. Distributed Training", topics: ["Memory limits & training time constraints","Data parallelism","Model parallelism","Pipeline parallelism","Gradient synchronization","All-reduce vs parameter servers","Node failures & spot instance preemption","Strong vs weak scaling","PyTorch Distributed","DeepSpeed","Horovod","NCCL"] },
+        { id: "mlopsdl-ckpt", title: "2. Checkpointing", topics: ["Long-running jobs & hardware failures","What to checkpoint: weights, optimizer state, LR schedulers, random seeds","Full vs partial checkpoints","Frequency tradeoffs & async checkpointing","Exact vs approximate resumption","DeepSpeed ZeRO Checkpointing","MLflow artifact tracking"] },
+        { id: "mlopsdl-storage", title: "3. Large Model Storage", topics: ["Multi-GB to multi-TB models","TorchScript, ONNX, SafeTensors formats","Immutable model artifacts","Model sharding strategies","Lazy loading","MLflow Model Registry","Hugging Face Hub","SafeTensors"] },
+        { id: "mlopsdl-infer", title: "4. Optimized Inference", topics: ["Always-on systems, latency SLOs, cost per request","Quantization","Pruning","Distillation","Kernel fusion","CPU vs GPU vs TPU inference","Model sharding at inference & multi-GPU inference","Micro-batching & dynamic batching","TensorRT","ONNX Runtime","Triton Inference Server","TorchServe","FasterTransformer"] },
+      ]},
+      { id: "deployment-mle", subject: "Deployment", color: "#34d399", icon: "🚀", sections: [
+        { id: "dep-storage-mle", title: "Model Storage", topics: ["Training checkpoints vs final model weights","PyTorch checkpoints, Safetensors format, Quantized model formats","Version control for models & model lineage","Hugging Face Hub, private model registries","Weight sharding & efficient model transfer"] },
+        { id: "dep-serving-mle", title: "Model Serving", topics: ["Online vs batch inference","GPU memory management, model warm-up, lazy loading","Prompt processing & streaming responses","Batching requests & KV cache usage","vLLM","Hugging Face TGI","Triton Inference Server","TensorRT-LLM"] },
+        { id: "dep-api-mle", title: "API Development", topics: ["Prompt input schema & response format design","FastAPI","Flask","gRPC","Token streaming & WebSocket responses","API keys, usage quotas, throttling","SDK development"] },
+        { id: "dep-infra-mle", title: "Infrastructure", topics: ["Docker images & containerized inference services","Kubernetes & scaling inference pods","AWS, GCP, Azure deployment","GPU scheduling & multi-GPU inference","On-device models & edge inference"] },
+        { id: "dep-post-mle", title: "Post Deployment", topics: ["Latency, throughput & GPU monitoring","Request logs & output analysis","Drift detection & quality degradation","Token usage tracking & cost optimization","Canary releases & rolling deployments"] },
+      ]},
+    ]
+  },
+  {
+    id: "research-track", label: "Research Engineer", icon: "⚗️", color: "#34d399", storageKey: "campusx-research-track-v1",
+    subjects: [
+      { id: "rl", subject: "RL Fundamentals", color: "#fbbf24", icon: "🎮", sections: [
+        { id: "rl-setup", title: "RL Setup", topics: ["Agent–environment interaction","Markov Decision Process (MDP)","States, actions, rewards","Policy and value functions"] },
+        { id: "rl-pg", title: "Policy Gradient Methods", topics: ["REINFORCE","Advantage function","Actor–critic intuition"] },
+        { id: "rl-ppo", title: "PPO", topics: ["PPO objective","Policy clipping","KL divergence control"] },
+      ]},
+      { id: "llm-foundations", subject: "LLM Foundations", color: "#34d399", icon: "🧬", sections: [
+        { id: "llmf-arch", title: "Types of Transformers", topics: ["Self-attention mechanism recap","Positional encoding & multi-head attention recap","Encoder models — bidirectional attention, MLM pretraining, BERT, RoBERTa","Decoder models — causal attention, autoregressive generation, GPT, LLaMA, Mistral","Encoder–Decoder — seq2seq, cross-attention, T5, BART","Why decoder-only models dominate LLMs"] },
+        { id: "llmf-lm", title: "Language Modeling", topics: ["Modeling probability of text sequences","Conditional probability of tokens","Next-token prediction & causal masking","Cross entropy loss & maximum likelihood estimation","Tokens vs words & subword tokenization","Vocabulary construction","Context window & long-context challenges"] },
+        { id: "llmf-hf", title: "LLM Inference in HuggingFace", topics: ["Hugging Face model hub & checkpoints","Tokenizer loading","Encoding input text — input IDs and attention masks","Forward pass & logits generation","generate() function & iterative token generation","GPT-style, instruction-tuned & chat models in HF"] },
+        { id: "llmf-decode", title: "Decoding Parameters", topics: ["Greedy decoding — deterministic generation & limitations","Temperature sampling","Top-K sampling","Top-P (nucleus) sampling","Repetition penalty","Frequency and presence penalties","Max tokens & stop sequences"] },
+        { id: "llmf-tasks", title: "Task Generalization", topics: ["Text classification — sentiment, topic, toxicity","Sequence labeling — NER, POS tagging","Extractive QA & Generative QA","Extractive vs abstractive summarization","Machine translation & cross-lingual transfer","Story generation, dialogue, content writing","Code completion, explanation, translation","Logical & mathematical reasoning, multi-step problem solving"] },
+      ]},
+      { id: "llm-engineering", subject: "LLM Engineering", color: "#60a5fa", icon: "⚗️", sections: [
+        { id: "llme-data", title: "Data for LLMs", topics: ["Web data (Common Crawl, C4, RefinedWeb)","Books, academic corpora, code datasets","Web scraping & dataset aggregation","Data licensing considerations","Noise removal & language filtering","Exact deduplication & near-duplicate detection","Toxicity filtering","Heuristic & classifier-based filtering","Dataset weighting & domain balancing","Curriculum-style data mixing"] },
+        { id: "llme-tok", title: "Tokenization", topics: ["Word-level, character-level, subword tokenization","Byte Pair Encoding (BPE)","WordPiece","SentencePiece","Vocabulary size tradeoffs","Handling rare words & token fragmentation","Multilingual & code tokenization challenges"] },
+        { id: "llme-pretrain", title: "Pretraining", topics: ["Autoregressive language modeling objective","Masked language modeling objective","Data batching & sequence packing","Scaling laws — model size, dataset size, compute","Distributed training — data, tensor, pipeline parallelism","Gradient clipping, learning rate schedules & warmup"] },
+        { id: "llme-ft", title: "Fine Tuning", topics: ["SFT — instruction datasets & chat formatting","SFT for tool use / function calling","Domain adaptation — continued pretraining vs SFT","LoRA","QLoRA","Adapters / Prefix tuning","Choosing PEFT vs full fine-tune","Post-training: data mixing, hyperparameter choices","Overfitting, catastrophic forgetting, safety regressions"] },
+        { id: "llme-align", title: "Alignment ⭐", topics: ["Helpfulness vs harmlessness vs honesty","Reward hacking / sycophancy problems","Human preference comparisons (A vs B)","Annotation guidelines & rater consistency","Pairwise ranking loss (Bradley–Terry)","Reward model evaluation + calibration","RLHF with PPO — policy init from SFT","PPO objective intuition + clipping","KL control to stay near SFT policy","Stability issues (reward hacking, collapse)","DPO objective intuition","When DPO beats PPO in practice","IPO / ORPO (optional)","Constitutional / rule-based preference data","Refusal behavior tuning","Red-teaming feedback loops","Alignment failure modes — reward hacking, over-refusal","Jailbreak susceptibility & capability drop"] },
+        { id: "llme-eval", title: "Evaluation", topics: ["Perplexity & loss curves","GLUE / SuperGLUE benchmarks","MMLU","BIG-Bench","HumanEval","Task-based eval — QA, reasoning, code generation","Human evaluation — helpfulness, truthfulness, safety","Hallucinations, bias, robustness testing"] },
+        { id: "llme-opt", title: "Optimization", topics: ["Mixed precision training","Gradient checkpointing","Activation checkpointing","Parameter sharding","Efficient GPU utilization","Mixture of Experts (MoE)","Sparse attention","Quantization","KV cache","Speculative decoding"] },
+        { id: "llme-lmm", title: "Large Multimodal Models (LMMs)", topics: ["Why multimodal — beyond text","Modality encoders (vision transformers for images)","Embedding non-text inputs into language model space","Cross-modal alignment mechanisms","Image captioning & visual question answering","Document understanding","Speech-to-text and text-to-speech","Multimodal dialogue systems","Combining text + multimodal training datasets"] },
+      ]},
+      { id: "deployment-research", subject: "Deployment", color: "#34d399", icon: "🚀", sections: [
+        { id: "dep-storage-r", title: "Model Storage", topics: ["Training checkpoints vs final model weights","PyTorch checkpoints, Safetensors format, Quantized model formats","Version control for models & model lineage","Hugging Face Hub, private model registries","Weight sharding & efficient model transfer"] },
+        { id: "dep-serving-r", title: "Model Serving", topics: ["Online vs batch inference","GPU memory management, model warm-up, lazy loading","Prompt processing, token generation loops, streaming responses","Batching requests & KV cache usage & dynamic batching","vLLM","Hugging Face TGI","Triton Inference Server","TensorRT-LLM"] },
+        { id: "dep-api-r", title: "API Development", topics: ["Prompt input schema & response format design","FastAPI","Flask","gRPC","Token streaming & WebSocket responses","API keys, usage quotas, throttling","SDK development"] },
+        { id: "dep-infra-r", title: "Infrastructure", topics: ["Docker images & containerized inference services","Kubernetes & scaling inference pods","AWS, GCP, Azure deployment","GPU scheduling & multi-GPU inference","On-device models & edge inference"] },
+        { id: "dep-post-r", title: "Post Deployment", topics: ["Latency, throughput & GPU monitoring","Request logs & output analysis","Drift detection & quality degradation","Token usage tracking & cost optimization","Canary releases & rolling deployments"] },
+      ]},
+    ]
+  },
+  {
+    id: "ai-eng-track", label: "AI Engineer", icon: "🚀", color: "#38bdf8", storageKey: "campusx-ai-eng-track-v1",
+    subjects: [
+      { id: "llm-literacy", subject: "LLM Literacy", color: "#38bdf8", icon: "📖", sections: [
+        { id: "lit-101", title: "LLM 101", topics: ["What 'language modeling' actually means","Next-token prediction intuition","Why predicting next token leads to reasoning-like behavior","Emergence & scale laws (intuition)","Foundation models vs task-specific models","Generative vs representation models","Why RNNs failed at scale","Attention mechanism intuition","Self-attention explained visually","Multi-head attention purpose","Encoder-only vs Decoder-only vs Encoder-Decoder","Why decoder-only models dominate LLMs","Context window & positional encoding","KV cache intuition (important for engineering)","What is tokenization (BPE, WordPiece intuition)","Why tokenization matters for cost","Embeddings as vector representations","Semantic similarity intuition","Why embeddings power RAG","Pretraining objective & massive data + self-supervision","Fine-tuning vs instruction tuning","RLHF intuition","Alignment vs capability","Why models hallucinate (probabilistic generation)","Temperature, top-k, top-p","Deterministic vs stochastic decoding","Context length limits & token streaming","Proprietary vs open-weight models","API-based vs self-hosted","Quantization intuition","MoE intuition (high level)","Multimodal models","Reasoning models vs chat models","What benchmarks actually measure — MMLU, GSM8K, HumanEval","Why benchmarks can mislead","Latency vs accuracy trade-offs","Cost per 1K tokens thinking","Hallucination types","Context loss & prompt sensitivity","Data contamination & overconfidence","Prompt injection basics"] },
+        { id: "lit-pe", title: "Prompt Engineering", topics: ["Prompt as 'soft programming'","LLM as a conditional probability machine","Why wording changes behavior","Why prompts fail (ambiguity, under-specification)","System vs user vs assistant messages","Role prompting & task specification","Context specification & constraints","Output format definition & delimiters","Zero-shot prompting","Few-shot prompting","Chain-of-thought prompting","Self-consistency prompting","Step-by-step reasoning","Ask-verify-improve loop","JSON output prompting","Schema-constrained outputs & Pydantic-style thinking","Function/tool calling","Deterministic format enforcement & parsing strategies","Prompt sensitivity testing","Adversarial prompting","Guardrail prompts & fallback strategies","Prompt versioning & regression testing","Task success rate & format accuracy rate","Hallucination rate & prompt A/B testing","Prompt injection basics","Jailbreak attempts","Data leakage risks","Safe system message design"] },
+        { id: "lit-ctx", title: "Context Engineering", topics: ["Context window as the model's working memory","Why LLMs are stateless between requests","How all inputs flatten into a single token sequence","Common failure patterns from poor context design","System instructions, user query, retrieved docs in context","Tool outputs, structured metadata, few-shot examples in context","Top-k retrieval tuning & re-ranking","Filtering irrelevant chunks","Separating instructions from data","Summarizing long histories","Map-reduce & recursive summarization","Clear delimiters & role separation","Token counting & dynamic truncation","Sliding window for conversations","Prioritization strategies","Detecting retrieval mismatch","Conflicting information resolution","Preventing instruction contamination"] },
+      ]},
+      { id: "ai-app-dev", subject: "AI App Development", color: "#a78bfa", icon: "🛠️", sections: [
+        { id: "app-orch", title: "Orchestration", topics: ["Why single LLM calls are insufficient for real apps","Deterministic control around probabilistic systems","Sequential workflows — chaining prompts","Conditional routing — classifier-based routing","Tool selection via model output","Parallel execution — running multiple LLM calls simultaneously","Voting/merging strategies","Reflection loops & self-critique cycles","Retry on failure & max iteration safeguards","JSON output prompting","Schema-constrained outputs & Pydantic-style thinking","Tool calling basics & structured function schemas","Passing arguments & handling tool errors","Returning tool outputs to model","Deterministic vs model-driven tool routing"] },
+        { id: "app-vdb", title: "Vector Databases", topics: ["Why keyword search is insufficient for semantic tasks","Embeddings as numerical representations","Why similarity search requires specialized indexing","Vector DB vs traditional database","Cosine similarity vs dot product vs Euclidean distance","High-dimensional intuition","Why semantically similar text clusters in space","Model-dependent embedding spaces","FAISS (local indexing)","Pinecone","Weaviate","Milvus","Chroma"] },
+        { id: "app-rag", title: "RAG ⭐", topics: ["Parametric memory vs non-parametric memory","RAG as 'retrieve → inject → generate'","When to use RAG vs fine-tuning","Core RAG pipeline: query → embed → search → retrieve → inject → generate","Document ingestion, cleaning, preprocessing","Chunking strategies & chunk overlap","Metadata tagging & embedding generation","Index construction","Similarity search basics","Hybrid search (BM25 + vectors)","Re-ranking retrieved documents","Query expansion & multi-query retrieval","Filtering with metadata","Ordering chunks & removing redundancy","Source attribution","Iterative retrieval","Self-RAG / reflective retrieval","Corrective RAG","Adaptive RAG","Graph RAG","Agentic RAG","Retrieval precision & recall","Answer faithfulness & groundedness checks","Synthetic test set creation","Poor chunking & irrelevant retrieval failure modes","Context overload & model ignoring retrieved data","Contradictory sources & stale data"] },
+        { id: "app-mem", title: "Memory", topics: ["Stateless nature of LLMs","Memory vs context","Short-term: conversation buffer, sliding window, session state","Long-term: persistent user data, historical interactions, preferences","Working memory: intermediate outputs, tool results, agent state","In-memory, file-based, relational DB, vector DB storage","Recency-based, similarity-based & metadata filtering retrieval","Importance-based recall & hybrid retrieval","Conversation summarization & sliding window truncation","Deduplication, aging & expiry policies","State persistence & checkpointing","Thread-level isolation","Multi-agent shared memory","Human-in-the-loop memory updates","Context overflow & stale memory failure modes","Privacy & data leakage risks","LangGraph Checkpointers, LlamaIndex Memory, Mem0","PostgreSQL, Redis, pgvector, Chroma, Pinecone"] },
+        { id: "app-ft", title: "Fine Tuning", topics: ["Definition of fine-tuning — parametric adaptation","Behavior vs knowledge modification","SFT — instruction–response format & dataset formatting","Training objective (cross-entropy) & train-validation split","Reward modeling & RLHF overview","DPO — Direct Preference Optimization","Freezing base weights & adapter-based training","LoRA — low-rank matrix decomposition","LoRA — injection into attention layers","Adapter merging vs separate deployment","QLoRA — 4-bit quantization","QLoRA — training LoRA on quantized weights","Memory optimization techniques","Instruction dataset creation & cleaning","Synthetic data generation & avoiding data leakage","Fine-tuning vs RAG vs prompt engineering decision","Task-specific metrics & behavioral consistency","Overfitting & catastrophic forgetting","Adapter storage, version control, swapping","Hosting strategies & quantized inference","Monitoring drift & rollback strategy"] },
+        { id: "app-auto", title: "AI Automation", topics: ["Automation vs intelligence","Rule-based vs LLM-driven automation","Deterministic vs probabilistic workflows","Human-in-the-loop automation","Trigger-based: webhooks, scheduled cron jobs","Sequential task automation: multi-step pipelines","Conditional automation: classifier-based routing","Loop & retry: iterative improvement, validation loops","API integration & function calling","Database operations & file handling","Email & messaging APIs","Web scraping & third-party SaaS integration","n8n","Zapier","Make"] },
+      ]},
+      { id: "agentic-ai", subject: "Agentic AI", color: "#f472b6", icon: "🤖", sections: [
+        { id: "agent-plan", title: "Planning & Reasoning", topics: ["Goal-oriented systems & task decomposition","Sequential decision making","Chain-of-thought reasoning","Tree-of-thoughts","ReAct (Reason + Act)","Reflection & self-critique","Deliberation vs direct answering","Planner–executor pattern","Orchestrator–subagent systems","Peer-to-peer agent communication","Collaborative & role-based agents","Subtask generation & dependency mapping","Ordered vs parallel execution","Recursive decomposition & dynamic replanning","Think → Act → Observe loop","Plan → Execute → Evaluate → Revise loop","Error-driven replanning & bounded iterations","Tool selection reasoning & argument construction","Tool result interpretation","Maintaining intermediate state & updating beliefs","Budget constraints (tokens, time, cost)","Safety constraints & deterministic overrides","Human-in-the-loop interruptions","Infinite loops & hallucinated tools failure modes","Task completion rate & plan validity"] },
+        { id: "agent-protocols", title: "Agent Protocols (MCP)", topics: ["What MCP is & why standard tool interfaces matter","Decoupling models from tools","Tool schema definitions & function calling formats","Input / output contracts","Structured tool responses","Model as client, tool provider as server","Local vs remote tool execution","Tool registration & dynamic capability exposure","Sandboxing tools & permission control","Input validation & preventing arbitrary execution","A2A protocol (awareness)"] },
+        { id: "agent-frameworks", title: "Agentic Frameworks", topics: ["LangGraph","AutoGen","CrewAI","LlamaIndex Agents","Semantic Kernel","Haystack Agents","OpenAI Agents SDK","Agno"] },
+      ]},
+      { id: "llmops", subject: "LLMOps", color: "#34d399", icon: "⚙️", sections: [
+        { id: "llmops-ux", title: "UX & Product Design", topics: ["Free-text vs structured inputs","Guided workflows & multi-step conversational flows","Streamlit, Gradio, React/Next.js, Vercel AI SDK","Citations (RAG source display) & confidence indicators","Tool-use visibility & clear error messaging","LangSmith trace visualization","Streaming responses & progressive loading — SSE, WebSockets","Regenerate / refine & editable outputs","Feedback logging & analytics (Mixpanel, PostHog)","A/B testing frameworks"] },
+        { id: "llmops-deploy", title: "Deployment", topics: ["API-based, self-hosted & hybrid model access","Serverless vs containerized deployment","OpenAI API, Anthropic API, AWS Bedrock, Azure OpenAI, Vertex AI, Ollama","REST APIs, background task workers, async processing, auth & rate limiting","FastAPI, Flask, Node.js, Redis","Dockerization & environment management","Scaling replicas, load balancing — Docker, Kubernetes, AWS ECS, Nginx","GPU inference servers & quantized inference — vLLM, TGI, Ollama","Queue-based systems — Redis, RabbitMQ, Kafka","Prompt & model versioning & automated deployments","GitHub Actions, GitLab CI, Terraform"] },
+        { id: "llmops-obs", title: "Observability", topics: ["Full prompt logging & context inspection","Tool call tracing & multi-step workflow visibility","LangSmith, OpenTelemetry, Datadog, Grafana","Token usage tracking & cost per request","Latency breakdown (model vs retrieval vs tools)","SLA monitoring — Prometheus, Grafana","Step-level execution tracking & tool failure rates","Loop detection","Hallucination tracking & output validation failures","TruLens, DeepEval, RAG evaluation frameworks","Error threshold, cost spike, latency anomaly alerts","PagerDuty, Slack alerts, Datadog alerts"] },
+        { id: "llmops-safety", title: "Safety & Guardrails", topics: ["Prompt injection prevention","Input validation & sanitization & role separation","OpenAI Moderation API, Anthropic Safety Filters, AWS Bedrock Guardrails","Toxicity detection & sensitive data masking","Structured output validation — Guardrails AI, Pydantic, Presidio","Tool permission control & argument validation","Sandboxed execution — MCP-based permission control, Docker sandboxing","Instruction isolation & trusted vs untrusted context","Retrieval filtering & output constraint enforcement","Content policies & user-level access control","API gateways, OAuth/JWT, IAM","Manual approval workflows & risk-based routing"] },
+        { id: "llmops-gov", title: "Governance", topics: ["Data sourcing policies, retention rules, PII handling","User data isolation & data deletion workflows","IAM, Presidio, DLP tools, KMS encryption","Role-Based Access Control (RBAC)","API key management, OAuth/JWT, AWS IAM, Auth0, Okta","Model versioning & prompt version control","Approval workflows & change tracking — Git, LangSmith, MLflow","GDPR readiness & data localization","Industry-specific compliance (finance, healthcare)","Audit trails & SIEM tools","Risk classification frameworks & impact assessment","Request logging & decision traceability"] },
+        { id: "llmops-platforms", title: "Managed AI Platforms", topics: ["Hosted foundation models & managed inference APIs","Built-in scaling, IAM, billing & usage tracking","Model selection, fine-tuning support & RAG integrations","Serverless inference & auto-scaling","Data encryption, VPC isolation, compliance certifications","AWS Bedrock","Azure OpenAI","Google Vertex AI","Hugging Face Inference Endpoints","Anthropic Platform","OpenAI Platform","When to use managed platforms vs self-host","Trade-offs: vendor lock-in, cost, customization limits"] },
+      ]},
+    ]
+  },
+];
+
+// ─── SVG ──────────────────────────────────────────────────────────────────
+const SVG_CHECK = '<svg width="8" height="8" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="#0b1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+// ─── CONSTANTS ────────────────────────────────────────────────────────────
+const IMPORTED_KEY = 'campusx-imported-stages-v1';
+const XP_KEY       = 'campusx-xp-v1';
+const XP_PER_TOPIC = 10;
+const XP_PER_LEVEL = 500;
+
+// ─── STATE ────────────────────────────────────────────────────────────────
+let allChecked     = {};
+let xp             = 0;
+let streak         = 0;
+let lastActive     = '';
+let importedStages = [];
+let activeStage    = 'prereq';
+let activeSubject  = 'python';
+let activeSection  = 'py-core';
+let view           = 'tracker';
+let searchQuery    = '';
+let hideCompleted  = false;
+
+let dataset     = [];
+let searchIndex = [];
+let progressMap = {};
+
+function recompute() {
+  dataset     = BASE_STAGES.concat(importedStages);
+  searchIndex = buildSearchIndex(dataset);
+  progressMap = buildProgressMap(searchIndex);
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────
+function tid(secId, label) {
+  return secId + '::' + label.slice(0, 45).replace(/\s+/g, '_');
+}
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function validateImport(parsed) {
+  if (!Array.isArray(parsed)) return 'Root must be a JSON array of stages.';
+  for (const s of parsed) {
+    if (!s.id || !s.label || !Array.isArray(s.subjects))
+      return 'Stage missing id / label / subjects: ' + JSON.stringify(s).slice(0,60);
+    for (const sub of s.subjects) {
+      if (!sub.id || !sub.subject || !Array.isArray(sub.sections))
+        return 'Subject missing id / subject / sections in stage "' + s.id + '"';
+      for (const sec of sub.sections) {
+        if (!sec.id || !sec.title || !Array.isArray(sec.topics))
+          return 'Section missing id / title / topics in subject "' + sub.id + '"';
+      }
+    }
+  }
+  return null;
+}
+function buildSearchIndex(ds) {
+  const idx = [];
+  ds.forEach(stage =>
+    stage.subjects.forEach(subj =>
+      subj.sections.forEach(sec =>
+        sec.topics.forEach(topic =>
+          idx.push({ stage, subj, sec, topic, id: tid(sec.id, topic) })
+        )
+      )
+    )
+  );
+  return idx;
+}
+function buildProgressMap(idx) {
+  const map = { stage:{}, subj:{}, sec:{}, total:0, done:0 };
+  idx.forEach(({ stage, subj, sec, id }) => {
+    const d = allChecked[id] ? 1 : 0;
+    if (!map.stage[stage.id]) map.stage[stage.id] = { done:0, total:0 };
+    if (!map.subj[subj.id])   map.subj[subj.id]   = { done:0, total:0 };
+    if (!map.sec[sec.id])     map.sec[sec.id]     = { done:0, total:0 };
+    map.stage[stage.id].total++; map.stage[stage.id].done += d;
+    map.subj[subj.id].total++;   map.subj[subj.id].done   += d;
+    map.sec[sec.id].total++;     map.sec[sec.id].done     += d;
+    map.total++; map.done += d;
+  });
+  return map;
+}
+function prog(type, id) {
+  const x = progressMap[type][id] || { done:0, total:0 };
+  return { done:x.done, total:x.total, pct: x.total ? Math.round((x.done/x.total)*100) : 0 };
+}
+function getActiveColor() {
+  const stage = dataset.find(s => s.id === activeStage);
+  const subj  = stage && stage.subjects.find(s => s.id === activeSubject);
+  return (subj && subj.color) || '#818cf8';
+}
+function findSecById(secId) {
+  for (const stage of dataset)
+    for (const subj of stage.subjects)
+      for (const sec of subj.sections)
+        if (sec.id === secId) return sec;
+  return null;
+}
+
+// ─── STORAGE ──────────────────────────────────────────────────────────────
+function loadAll() {
+  try {
+    const imp = localStorage.getItem(IMPORTED_KEY);
+    if (imp) importedStages = JSON.parse(imp) || [];
+  } catch(_) {}
+  recompute();
+  const combined = {};
+  for (const stage of dataset) {
+    try {
+      const res = localStorage.getItem(stage.storageKey);
+      if (res) Object.assign(combined, JSON.parse(res).checked || {});
+    } catch(_) {}
+  }
+  allChecked = combined;
+  try {
+    const xpRes = localStorage.getItem(XP_KEY);
+    if (xpRes) { const d = JSON.parse(xpRes); xp = d.xp||0; streak = d.streak||0; lastActive = d.lastActive||''; }
+  } catch(_) {}
+  progressMap = buildProgressMap(searchIndex);
+}
+function saveStage(stageId) {
+  const stage = dataset.find(s => s.id === stageId);
+  if (!stage) return;
+  const scoped = {};
+  searchIndex.filter(item => item.stage.id === stageId)
+    .forEach(item => { if (allChecked[item.id] !== undefined) scoped[item.id] = allChecked[item.id]; });
+  try { localStorage.setItem(stage.storageKey, JSON.stringify({ checked: scoped })); } catch(_) {}
+}
+function saveXP() {
+  try { localStorage.setItem(XP_KEY, JSON.stringify({ xp, streak, lastActive })); } catch(_) {}
+}
+function saveImported() {
+  try { localStorage.setItem(IMPORTED_KEY, JSON.stringify(importedStages)); } catch(_) {}
+}
+
+// ─── MOBILE DRAWER ────────────────────────────────────────────────────────
+function toggleSidebar() {
+  const sidebar = document.getElementById('stage-sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const isOpen  = sidebar.classList.contains('open');
+  sidebar.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('visible', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+function closeSidebarIfMobile() {
+  if (window.innerWidth < 1024) {
+    const sidebar = document.getElementById('stage-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+}
+
+// ─── MOBILE VIEW TOGGLE ───────────────────────────────────────────────────
+function switchMobileView(v) {
+  const mbt = document.getElementById('mbtn-tracker');
+  const mbd = document.getElementById('mbtn-dash');
+  if (v === 'dashboard') {
+    if (view !== 'dashboard') { view = 'dashboard'; recompute(); updateHeader(); showDashboard(); renderDashboard(); }
+    if (mbt) mbt.classList.remove('active');
+    if (mbd) mbd.classList.add('active');
+  } else {
+    if (view !== 'tracker') { view = 'tracker'; render(); }
+    if (mbt) mbt.classList.add('active');
+    if (mbd) mbd.classList.remove('active');
+  }
+}
+function syncMobileViewButtons() {
+  const mbt = document.getElementById('mbtn-tracker');
+  const mbd = document.getElementById('mbtn-dash');
+  if (mbt) mbt.classList.toggle('active', view === 'tracker');
+  if (mbd) mbd.classList.toggle('active', view === 'dashboard');
+}
+
+// ─── ACTIONS ──────────────────────────────────────────────────────────────
+function toggleTopic(id, stageId) {
+  const nowChecked = !allChecked[id];
+  allChecked[id] = nowChecked;
+  saveStage(stageId);
+  if (nowChecked) {
+    xp += XP_PER_TOPIC;
+    const today = new Date().toLocaleDateString('en-CA');
+    if (lastActive !== today) {
+      const yest = new Date(); yest.setDate(yest.getDate()-1);
+      streak = lastActive === yest.toLocaleDateString('en-CA') ? streak+1 : 1;
+      lastActive = today;
+    }
+  } else {
+    xp = Math.max(0, xp - XP_PER_TOPIC);
+  }
+  saveXP();
+  progressMap = buildProgressMap(searchIndex);
+  updateHeader();
+  updateTopicRowDOM(id);
+  updateSectionProgressInDOM();
+  updateSidebarProgressInDOM();
+}
+function markAllTopics(secId, topics, stageId, forceDone) {
+  const ids = topics.map(t => tid(secId, t));
+  let delta = 0;
+  ids.forEach(id => {
+    const was = !!allChecked[id];
+    allChecked[id] = forceDone;
+    if (forceDone && !was)  delta += XP_PER_TOPIC;
+    if (!forceDone && was)  delta -= XP_PER_TOPIC;
+  });
+  xp = Math.max(0, xp + delta);
+  saveStage(stageId); saveXP();
+  progressMap = buildProgressMap(searchIndex);
+  updateHeader();
+  renderTopics();
+  updateSectionProgressInDOM();
+  updateSidebarProgressInDOM();
+}
+function navigateTo(stId, subId, secId) {
+  activeStage = stId; activeSubject = subId; activeSection = secId;
+  searchQuery = ''; view = 'tracker';
+  const si = document.getElementById('search-input');
+  if (si) si.value = '';
+  closeSidebarIfMobile();
+  showTracker();
+  setSearchMode(false);
+  renderSidebar();
+  renderSubjectTabs();
+  renderSectionList();
+  renderTopics();
+  syncMobileViewButtons();
+  setTimeout(() => {
+    const pane = document.getElementById('topics-pane');
+    if (pane) pane.scrollTo({ top:0, behavior:'smooth' });
+  }, 10);
+}
+
+// ─── HEADER ───────────────────────────────────────────────────────────────
+function updateHeader() {
+  const overallPct = progressMap.total ? Math.round((progressMap.done/progressMap.total)*100) : 0;
+  const level      = Math.floor(xp/XP_PER_LEVEL) + 1;
+  const levelPct   = Math.round(((xp%XP_PER_LEVEL)/XP_PER_LEVEL)*100);
+
+  const el = (id, fn) => { const e = document.getElementById(id); if (e) fn(e); };
+  // Desktop
+  el('overall-fill',  e => e.style.width = overallPct+'%');
+  el('overall-text',  e => e.textContent = progressMap.done+'/'+progressMap.total+' topics \u2014 '+overallPct+'%');
+  el('level-lbl',     e => e.textContent = 'LVL '+level);
+  el('level-fill',    e => e.style.width = levelPct+'%');
+  el('xp-val',        e => e.textContent = xp+' XP');
+  el('streak-count',  e => e.textContent = streak);
+  // Mobile
+  el('mobile-progress-fill',  e => e.style.width = overallPct+'%');
+  el('mobile-streak-count',   e => e.textContent = streak);
+}
+
+// ─── PARTIAL DOM UPDATES ──────────────────────────────────────────────────
+function updateTopicRowDOM(id) {
+  const esc = CSS.escape ? CSS.escape(id) : id.replace(/:/g,'\\:');
+  const row = document.querySelector('[data-tid="'+esc+'"]');
+  if (!row) return;
+  const isDone = !!allChecked[id];
+  const chk  = row.querySelector('.chk');
+  const span = row.querySelector('.topic-text');
+  if (chk)  { chk.classList.toggle('done', isDone); chk.innerHTML = isDone ? SVG_CHECK : ''; }
+  if (span) {
+    span.style.color          = isDone ? 'var(--text-faint)' : 'var(--text-pri)';
+    span.style.textDecoration = isDone ? 'line-through' : 'none';
+    span.style.fontWeight     = isDone ? '300' : '400';
+  }
+}
+function updateSectionProgressInDOM() {
+  document.querySelectorAll('.sec-row[data-sec-id]').forEach(el => {
+    const { done, total, pct } = prog('sec', el.dataset.secId);
+    const fill = el.querySelector('.pill-fill');
+    if (fill) fill.style.width = pct+'%';
+    const cnt = el.querySelector('.sec-count');
+    if (cnt) cnt.textContent = done+'/'+total;
+    const tick = el.querySelector('.sec-tick');
+    if (tick) tick.style.display = (done===total&&total>0) ? '' : 'none';
+  });
+  if (activeSection) {
+    const { done, total, pct } = prog('sec', activeSection);
+    const hdrDone = document.getElementById('hdr-done');
+    if (hdrDone) hdrDone.textContent = done+'/'+total;
+    const hdrFill = document.getElementById('hdr-fill');
+    if (hdrFill) hdrFill.style.width = pct+'%';
+    const hdrComplete = document.getElementById('hdr-complete');
+    if (hdrComplete) hdrComplete.style.display = (done===total&&total>0) ? '' : 'none';
+    const allDone = done===total&&total>0;
+    const btn = document.getElementById('mark-all-btn');
+    if (btn) {
+      btn.textContent       = allDone ? 'UNMARK ALL' : 'MARK ALL DONE';
+      btn.dataset.forceDone = allDone ? 'false' : 'true';
+      const C = getActiveColor();
+      btn.style.borderColor = allDone ? 'var(--border-lo)' : (C+'50');
+      btn.style.color       = allDone ? 'var(--text-faint)' : C;
+    }
+  }
+  document.querySelectorAll('.subj-tab[data-subj-id]').forEach(el => {
+    const { pct } = prog('subj', el.dataset.subjId);
+    const pctEl = el.querySelector('.subj-pct');
+    if (pctEl) pctEl.textContent = pct+'%';
+  });
+}
+function updateSidebarProgressInDOM() {
+  document.querySelectorAll('.stage-btn[data-stage-id]').forEach(el => {
+    const { pct } = prog('stage', el.dataset.stageId);
+    const fill  = el.querySelector('.pill-fill');
+    if (fill)  fill.style.width = pct+'%';
+    const pctEl = el.querySelector('.stage-pct');
+    if (pctEl) pctEl.textContent = pct+'%';
+  });
+}
+
+// ─── VIEW HELPERS ─────────────────────────────────────────────────────────
+function setSearchMode(active) {
+  const tabs    = document.getElementById('subject-tabs');
+  const secList = document.getElementById('section-list');
+  if (tabs)    tabs.style.display    = active ? 'none' : '';
+  if (secList) secList.style.display = active ? 'none' : '';
+}
+function showTracker() {
+  const tc = document.getElementById('tracker-content');
+  const dc = document.getElementById('dashboard-content');
+  const sb = document.getElementById('searchbar');
+  if (tc) tc.style.display = 'flex';
+  if (dc) dc.style.display = 'none';
+  if (sb) sb.style.display = 'flex';
+  const bt = document.getElementById('btn-tracker');
+  const bd = document.getElementById('btn-dashboard');
+  if (bt) bt.classList.add('active');
+  if (bd) bd.classList.remove('active');
+}
+function showDashboard() {
+  const tc = document.getElementById('tracker-content');
+  const dc = document.getElementById('dashboard-content');
+  const sb = document.getElementById('searchbar');
+  if (tc) tc.style.display = 'none';
+  if (dc) dc.style.display = 'block';
+  if (sb) sb.style.display = 'none';
+  const bt = document.getElementById('btn-tracker');
+  const bd = document.getElementById('btn-dashboard');
+  if (bd) bd.classList.add('active');
+  if (bt) bt.classList.remove('active');
+}
+
+// ─── RENDER: SIDEBAR ──────────────────────────────────────────────────────
+function renderSidebar() {
+  const el = document.getElementById('stage-list-inner');
+  if (!el) return;
+  let html = '';
+  dataset.forEach(stage => {
+    const { pct } = prog('stage', stage.id);
+    const isAct = activeStage === stage.id;
+    const isImp = importedStages.some(s => s.id === stage.id);
+    html += '<div class="stage-btn '+(isAct?'active':'')+'" '
+      +'style="--c:'+stage.color+'" data-stage-id="'+stage.id+'">'
+      +'<span style="font-size:16px;flex-shrink:0">'+escHtml(stage.icon)+'</span>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:11px;font-weight:'+(isAct?600:400)+';'
+      +'color:'+(isAct?'var(--text-pri)':'var(--text-muted)')+';margin-bottom:5px;line-height:1.3;'
+      +'font-family:\'Plus Jakarta Sans\',sans-serif">'+escHtml(stage.label)+'</div>'
+      +'<div style="display:flex;align-items:center;gap:6px">'
+      +'<div class="pill-bar" style="flex:1;height:3px">'
+      +'<div class="pill-fill" style="width:'+pct+'%;background:'+stage.color
+      +';opacity:'+(isAct?'0.9':'0.3')+'"></div>'
+      +'</div>'
+      +'<span class="stage-pct" style="font-size:10px;color:var(--text-pri);flex-shrink:0">'+pct+'%</span>'
+      +'</div></div>'
+      +(isImp
+        ? '<span class="remove-imported" data-stage-id="'+stage.id
+          +'" title="Remove" style="font-size:11px;color:var(--text-faint);cursor:pointer;flex-shrink:0;padding:4px">&#x2715;</span>'
+        : '')
+      +'</div>';
+  });
+  el.innerHTML = html;
+}
+
+// ─── RENDER: SUBJECT TABS ─────────────────────────────────────────────────
+function renderSubjectTabs() {
+  const el = document.getElementById('subject-tabs');
+  if (!el) return;
+  const stageData = dataset.find(s => s.id === activeStage);
+  if (!stageData) { el.innerHTML = ''; return; }
+  let html = '';
+  stageData.subjects.forEach(subj => {
+    const { pct } = prog('subj', subj.id);
+    const isAct = activeSubject === subj.id;
+    html += '<div class="subj-tab '+(isAct?'active':'')+'" '
+      +'style="--c:'+subj.color+'" data-subj-id="'+subj.id+'">'
+      +'<span style="font-size:14px">'+escHtml(subj.icon)+'</span>'
+      +'<span>'+escHtml(subj.subject)+'</span>'
+      +'<span class="subj-pct" style="font-size:9px;color:'+(isAct?subj.color:'var(--text-faint)')+';margin-left:2px">'+pct+'%</span>'
+      +'</div>';
+  });
+  el.innerHTML = html;
+}
+
+// ─── RENDER: SECTION LIST ─────────────────────────────────────────────────
+function renderSectionList() {
+  const el = document.getElementById('section-list');
+  if (!el) return;
+  const stageData = dataset.find(s => s.id === activeStage);
+  const subjData  = stageData && stageData.subjects.find(s => s.id === activeSubject);
+  if (!subjData) { el.innerHTML = ''; return; }
+  const C = subjData.color || '#818cf8';
+  let html = '';
+  subjData.sections.forEach(sec => {
+    const { done, total, pct } = prog('sec', sec.id);
+    const isAct = activeSection === sec.id;
+    html += '<div class="sec-row '+(isAct?'active':'')+'" '
+      +'style="--c:'+C+'" data-sec-id="'+sec.id+'">'
+      +'<div style="flex:1;min-width:0">'
+      +'<div class="sec-row-title" style="font-size:11px;font-weight:'+(isAct?600:400)+';'
+      +'color:'+(isAct?'var(--text-pri)':'var(--text-muted)')+'">'+escHtml(sec.title)+'</div>'
+      +'<div class="sec-row-progress" style="display:flex;align-items:center;gap:6px;margin-top:4px">'
+      +'<div class="pill-bar" style="flex:1;height:2px">'
+      +'<div class="pill-fill" style="width:'+pct+'%;background:'+C+';opacity:'+(isAct?'0.9':'0.3')+'"></div>'
+      +'</div>'
+      +'<span class="sec-count" style="font-size:10px;color:var(--text-pri);flex-shrink:0">'+done+'/'+total+'</span>'
+      +'</div></div>'
+      +'<span class="sec-tick" style="font-size:10px;color:'+C+';flex-shrink:0;display:'+(done===total&&total>0?'':'none')+'">&#x2713;</span>'
+      +'</div>';
+  });
+  el.innerHTML = html;
+}
+
+// ─── RENDER: TOPICS PANE ──────────────────────────────────────────────────
+function renderTopics() {
+  const pane = document.getElementById('topics-pane');
+  if (!pane) return;
+  const stageData = dataset.find(s => s.id === activeStage);
+  const subjData  = stageData && stageData.subjects.find(s => s.id === activeSubject);
+  const sec       = subjData && subjData.sections.find(s => s.id === activeSection);
+  if (!sec) { pane.innerHTML = ''; return; }
+
+  const C = subjData.color || '#818cf8';
+  const { done, total, pct } = prog('sec', sec.id);
+  const allDone = done === total && total > 0;
+
+  let topicRows = '';
+  sec.topics.forEach(t => {
+    const id    = tid(sec.id, t);
+    const isDone = !!allChecked[id];
+    topicRows += '<div class="topic-row" style="--c:'+C+'" data-tid="'+escHtml(id)+'" data-stage-id="'+activeStage+'">'
+      +'<div class="chk '+(isDone?'done':'')+'" style="--c:'+C+'">'+(isDone?SVG_CHECK:'')+'</div>'
+      +'<span class="topic-text" style="font-size:12px;line-height:1.65;font-weight:'+(isDone?300:400)+';'
+      +'color:'+(isDone?'var(--text-faint)':'var(--text-pri)')+';'
+      +'text-decoration:'+(isDone?'line-through':'none')+'">'+escHtml(t)+'</span>'
+      +'</div>';
+  });
+
+  pane.innerHTML =
+    '<div style="padding:14px 16px 10px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:2">'
+    +'<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">'
+    +'<div>'
+    +'<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:15px;font-weight:700;color:var(--text-pri);letter-spacing:-.02em">'+escHtml(sec.title)+'</div>'
+    +'<div style="font-size:10px;color:var(--text-faint);margin-top:2px;font-family:\'Plus Jakarta Sans\',sans-serif">'+escHtml(stageData.label)+' \xb7 '+escHtml(subjData.subject)+'</div>'
+    +'</div>'
+    +'<span id="hdr-done" style="font-size:11px;color:var(--text-muted);margin-top:2px">'+done+'/'+total+'</span>'
+    +'</div>'
+    +'<div class="pill-bar" style="height:3px">'
+    +'<div id="hdr-fill" class="pill-fill" style="width:'+pct+'%;background:'+C+'"></div>'
+    +'</div>'
+    +'<div id="hdr-complete" style="font-size:10px;color:'+C+';margin-top:6px;font-weight:700;letter-spacing:.07em;font-family:\'Plus Jakarta Sans\',sans-serif;display:'+(allDone?'':'none')+'">\u2713 SECTION COMPLETE</div>'
+    +'</div>'
+    +'<div>'+topicRows+'</div>'
+    +'<div style="padding:12px 16px;border-top:1px solid var(--border)">'
+    +'<button id="mark-all-btn" class="mark-all-btn" '
+    +'style="border:1px solid '+(allDone?'var(--border-lo)':C+'50')+';color:'+(allDone?'var(--text-faint)':C)+'" '
+    +'data-sec-id="'+sec.id+'" data-stage-id="'+activeStage+'" data-force-done="'+(allDone?'false':'true')+'">'
+    +(allDone?'UNMARK ALL':'MARK ALL DONE')
+    +'</button>'
+    +'</div>';
+}
+
+// ─── RENDER: SEARCH RESULTS ───────────────────────────────────────────────
+function renderSearchResults() {
+  const pane = document.getElementById('topics-pane');
+  if (!pane) return;
+  const q = searchQuery.toLowerCase();
+  const results = searchIndex.filter(({ topic, sec, id }) => {
+    const done  = !!allChecked[id];
+    const match = !q || topic.toLowerCase().includes(q) || sec.title.toLowerCase().includes(q);
+    return match && (hideCompleted ? !done : true);
+  });
+  let html = '<div style="padding:18px">'
+    +'<div style="margin-bottom:14px;font-size:11px;color:var(--primary);font-weight:700;letter-spacing:.07em;font-family:\'Plus Jakarta Sans\',sans-serif">'
+    +results.length+' RESULT'+(results.length!==1?'S':'')
+    +'</div>';
+  if (results.length === 0) {
+    html += '<div style="color:var(--text-muted);font-size:13px">Nothing matches. Try a different query.</div>';
+  } else {
+    results.forEach(res => {
+      const isDone = !!allChecked[res.id];
+      html += '<div class="topic-row" style="--c:'+res.subj.color+';padding:12px 14px;align-items:flex-start" '
+        +'data-tid="'+escHtml(res.id)+'" data-stage-id="'+res.stage.id+'">'
+        +'<div class="chk '+(isDone?'done':'')+'" style="--c:'+res.subj.color+';margin-top:4px">'+(isDone?SVG_CHECK:'')+'</div>'
+        +'<div style="flex:1;cursor:pointer" data-nav-stage="'+res.stage.id+'" data-nav-subj="'+res.subj.id+'" data-nav-sec="'+res.sec.id+'">'
+        +'<div class="search-badge" style="--c:'+res.subj.color+'">'+escHtml(res.stage.label)+' / '+escHtml(res.subj.subject)+' / '+escHtml(res.sec.title)+'</div>'
+        +'<div style="font-size:12px;font-weight:'+(isDone?300:500)+';'
+        +'color:'+(isDone?'var(--text-faint)':'var(--text-pri)')+';'
+        +'text-decoration:'+(isDone?'line-through':'none')+';line-height:1.5">'+escHtml(res.topic)+'</div>'
+        +'</div>'
+        +'</div>';
+    });
+  }
+  html += '</div>';
+  pane.innerHTML = html;
+}
+
+// ─── RENDER: DASHBOARD ────────────────────────────────────────────────────
+function renderDashboard() {
+  const grid = document.getElementById('dashboard-grid');
+  if (!grid) return;
+  
+  let html = '';
+  dataset.forEach(stage => {
+    const { done, total, pct } = prog('stage', stage.id);
+    
+    let subjRows = '';
+    stage.subjects.forEach(subj => {
+      const sp = prog('subj', subj.id);
+      subjRows += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:3px">'
+        // UPGRADED: Changed from text-sec to text-pri for maximum readability
+        +'<span style="font-family:\'Plus Jakarta Sans\', sans-serif;font-size:12px;font-weight:600;color:var(--text-pri);width:115px;flex-shrink:0;'
+        +'overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escHtml(subj.subject)+'</span>'
+        
+        +'<div class="pill-bar" style="flex:1;height:4px">'
+        +'<div class="pill-fill" style="width:'+sp.pct+'%;background:'+subj.color+';opacity:0.9"></div>'
+        +'</div>'
+        
+        +'<span style="font-family:\'JetBrains Mono\', monospace;font-weight:600;font-variant-numeric:tabular-nums;font-size:11px;color:var(--text-pri);min-width:32px;text-align:right">'+sp.pct+'%</span>'
+        +'</div>';
+    });
+    
+    html += '<div class="dash-card" style="--c:'+stage.color+'" data-stage-id="'+stage.id+'">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'
+      +'<div style="display:flex;align-items:center;gap:10px">'
+      +'<span style="font-size:20px">'+escHtml(stage.icon)+'</span>'
+      +'<span style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:15px;font-weight:800;color:var(--text-pri)">'+escHtml(stage.label)+'</span>'
+      +'</div>'
+      +'<span style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:18px;font-weight:800;color:'+stage.color+'">'+pct+'%</span>'
+      +'</div>'
+      
+      +'<div class="pill-bar" style="height:4px;margin-bottom:12px">'
+      +'<div class="pill-fill" style="width:'+pct+'%;background:'+stage.color+';opacity:1"></div>'
+      +'</div>'
+      
+      // Data vs Label contrast split: numbers = text-pri bold, labels = text-sec
+      +'<div class="dash-topics-line">'
+      +'<span class="stat-num">'+done+' / '+total+'</span> '
+      +'<span class="stat-label">topics</span>'
+      +'</div>'
+      
+      +'<div style="display:flex;flex-direction:column;gap:5px">'+subjRows+'</div>'
+      +'</div>';
+  });
+  grid.innerHTML = html;
+}
+
+// ─── MASTER RENDER ────────────────────────────────────────────────────────
+function render() {
+  recompute(); updateHeader(); syncMobileViewButtons();
+  if (view === 'dashboard') { showDashboard(); renderDashboard(); return; }
+  showTracker();
+  if (searchQuery || hideCompleted) {
+    setSearchMode(true); renderSidebar(); renderSearchResults(); return;
+  }
+  setSearchMode(false);
+  renderSidebar(); renderSubjectTabs(); renderSectionList(); renderTopics();
+}
+
+// ─── IMPORT ───────────────────────────────────────────────────────────────
+function openImport() {
+  document.getElementById('import-modal').classList.add('open');
+  const ta = document.getElementById('import-textarea');
+  if (ta) ta.value = '';
+  hideImportMessages(); renderImportedList();
+}
+function closeImport() { document.getElementById('import-modal').classList.remove('open'); }
+function hideImportMessages() {
+  const m = document.getElementById('import-msg');
+  const e = document.getElementById('import-err');
+  if (m) { m.style.display='none'; m.textContent=''; }
+  if (e) { e.style.display='none'; e.textContent=''; }
+}
+function renderImportedList() {
+  const wrap = document.getElementById('imported-list-wrap');
+  if (!wrap) return;
+  if (importedStages.length === 0) { wrap.innerHTML = ''; return; }
+  let html = '<div class="imported-list"><div class="import-list-title">IMPORTED STAGES</div>';
+  importedStages.forEach(s => {
+    html += '<div class="imported-item">'
+      +'<span>'+escHtml(s.icon||'\uD83D\uDCE6')+' '+escHtml(s.label)+'</span>'
+      +'<span class="imported-remove" data-stage-id="'+s.id+'">Remove</span>'
+      +'</div>';
+  });
+  html += '</div>';
+  wrap.innerHTML = html;
+}
+function doImport() {
+  hideImportMessages();
+  const text = (document.getElementById('import-textarea')||{}).value||'';
+  const msgEl = document.getElementById('import-msg');
+  const errEl = document.getElementById('import-err');
+  let parsed;
+  try { parsed = JSON.parse(text); }
+  catch(e) { if (errEl) { errEl.textContent='Invalid JSON \u2014 '+e.message; errEl.style.display='block'; } return; }
+  const err = validateImport(parsed);
+  if (err) { if (errEl) { errEl.textContent=err; errEl.style.display='block'; } return; }
+  const withKeys = parsed.map(s => Object.assign({ icon:'\uD83D\uDCE6', color:'#818cf8' }, s, {
+    storageKey: s.storageKey || ('campusx-imported-'+s.id+'-v1')
+  }));
+  importedStages = importedStages.filter(e => !withKeys.find(n => n.id===e.id)).concat(withKeys);
+  saveImported(); recompute();
+  if (msgEl) { msgEl.textContent='Imported '+withKeys.length+' stage(s) successfully.'; msgEl.style.display='block'; }
+  const ta = document.getElementById('import-textarea');
+  if (ta) ta.value = '';
+  renderImportedList(); render();
+}
+function removeImported(stageId) {
+  importedStages = importedStages.filter(s => s.id !== stageId);
+  saveImported(); recompute(); renderImportedList();
+  if (activeStage === stageId) {
+    activeStage = BASE_STAGES[0].id;
+    activeSubject = BASE_STAGES[0].subjects[0].id;
+    activeSection = BASE_STAGES[0].subjects[0].sections[0].id;
+  }
+  render();
+}
+
+// ─── THEME TOGGLE ─────────────────────────────────────────────────────────
+const THEME_KEY = 'campusx-theme-v1';
+let currentTheme = localStorage.getItem(THEME_KEY) || 'dark';
+
+function updateToggleBtn() {
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  ['mobile-theme-btn','desktop-theme-btn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const iconEl  = btn.querySelector('.theme-icon');
+    const labelEl = btn.querySelector('.theme-label');
+    if (iconEl)  iconEl.textContent  = isDark ? '🌙' : '☀️';
+    if (labelEl) labelEl.textContent = isDark ? 'Dark' : 'Light';
+    btn.setAttribute('aria-label', `Theme: ${isDark ? 'Dark' : 'Light'} — click to switch`);
+  });
+}
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  const root = document.documentElement;
+  if (theme === 'light') {
+    root.setAttribute('data-theme', 'light');
+  } else {
+    root.removeAttribute('data-theme');
+  }
+  updateToggleBtn();
+  try { localStorage.setItem(THEME_KEY, theme); } catch(_) {}
+}
+function toggleTheme() {
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+}
+
+// ─── EVENTS ───────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  applyTheme(currentTheme);
+  loadAll(); render();
+
+  // Desktop view toggle
+  document.getElementById('btn-tracker').addEventListener('click', function() {
+    if (view !== 'tracker') { view = 'tracker'; render(); syncMobileViewButtons(); }
+  });
+  document.getElementById('btn-dashboard').addEventListener('click', function() {
+    if (view !== 'dashboard') {
+      view = 'dashboard'; recompute(); updateHeader(); showDashboard(); renderDashboard(); syncMobileViewButtons();
+    }
+  });
+
+  // Search
+  let searchDebounce = null;
+  document.getElementById('search-input').addEventListener('input', function(e) {
+    const val = e.target.value;
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(function() {
+      searchQuery = val;
+      if (searchQuery || hideCompleted) { setSearchMode(true); renderSidebar(); renderSearchResults(); }
+      else { setSearchMode(false); renderSidebar(); renderSubjectTabs(); renderSectionList(); renderTopics(); }
+    }, 300);
+  });
+
+  // Hide done
+  document.getElementById('hide-done-wrap').addEventListener('click', function() {
+    hideCompleted = !hideCompleted;
+    document.getElementById('hide-done-toggle').classList.toggle('on', hideCompleted);
+    if (searchQuery || hideCompleted) { setSearchMode(true); renderSidebar(); renderSearchResults(); }
+    else { setSearchMode(false); renderSidebar(); renderSubjectTabs(); renderSectionList(); renderTopics(); }
+  });
+
+  // Import modal
+  document.getElementById('open-import-btn').addEventListener('click', openImport);
+  document.getElementById('close-import-btn').addEventListener('click', closeImport);
+  document.getElementById('import-modal').addEventListener('click', closeImport);
+  document.getElementById('do-import-btn').addEventListener('click', doImport);
+
+  // Sidebar overlay close
+  document.getElementById('sidebar-overlay').addEventListener('click', function() {
+    const sidebar = document.getElementById('stage-sidebar');
+    sidebar.classList.remove('open');
+    this.classList.remove('visible');
+    document.body.style.overflow = '';
+  });
+
+  // Stage sidebar (event delegation on parent)
+  document.getElementById('stage-sidebar').addEventListener('click', function(e) {
+    const rmv = e.target.closest('.remove-imported');
+    if (rmv) { e.stopPropagation(); removeImported(rmv.dataset.stageId); return; }
+    const btn = e.target.closest('.stage-btn[data-stage-id]');
+    if (btn) {
+      const stageId = btn.dataset.stageId;
+      if (stageId !== activeStage) {
+        const stage = dataset.find(s => s.id === stageId);
+        if (stage) navigateTo(stageId, stage.subjects[0].id, stage.subjects[0].sections[0].id);
+      } else {
+        closeSidebarIfMobile();
+      }
+    }
+  });
+
+  // Subject tabs
+  document.getElementById('subject-tabs').addEventListener('click', function(e) {
+    const tab = e.target.closest('.subj-tab[data-subj-id]');
+    if (tab) {
+      const subjId    = tab.dataset.subjId;
+      const stageData = dataset.find(s => s.id === activeStage);
+      const subj      = stageData && stageData.subjects.find(s => s.id === subjId);
+      if (subj && subjId !== activeSubject) {
+        activeSubject = subjId; activeSection = subj.sections[0].id;
+        renderSubjectTabs(); renderSectionList(); renderTopics();
+        const pane = document.getElementById('topics-pane');
+        if (pane) pane.scrollTo({ top:0, behavior:'smooth' });
+      }
+    }
+  });
+
+  // Section list
+  document.getElementById('section-list').addEventListener('click', function(e) {
+    const row = e.target.closest('.sec-row[data-sec-id]');
+    if (row && row.dataset.secId !== activeSection) {
+      activeSection = row.dataset.secId;
+      renderSectionList(); renderTopics();
+      const pane = document.getElementById('topics-pane');
+      if (pane) pane.scrollTo({ top:0, behavior:'smooth' });
+    }
+  });
+
+  // Topics pane
+  document.getElementById('topics-pane').addEventListener('click', function(e) {
+    const markBtn = e.target.closest('#mark-all-btn');
+    if (markBtn) {
+      const secId    = markBtn.dataset.secId;
+      const stageId  = markBtn.dataset.stageId;
+      const forceDone = markBtn.dataset.forceDone === 'true';
+      const sec = findSecById(secId);
+      if (sec) markAllTopics(secId, sec.topics, stageId, forceDone);
+      return;
+    }
+    const navEl = e.target.closest('[data-nav-stage]');
+    if (navEl) { navigateTo(navEl.dataset.navStage, navEl.dataset.navSubj, navEl.dataset.navSec); return; }
+    const row = e.target.closest('.topic-row[data-tid]');
+    if (row) toggleTopic(row.dataset.tid, row.dataset.stageId);
+  });
+
+  // Dashboard card clicks
+  document.getElementById('dashboard-grid').addEventListener('click', function(e) {
+    const card = e.target.closest('.dash-card[data-stage-id]');
+    if (card) {
+      const stage = dataset.find(s => s.id === card.dataset.stageId);
+      if (stage) navigateTo(stage.id, stage.subjects[0].id, stage.subjects[0].sections[0].id);
+    }
+  });
+
+  // Import modal list
+  document.getElementById('imported-list-wrap').addEventListener('click', function(e) {
+    const btn = e.target.closest('.imported-remove');
+    if (btn) removeImported(btn.dataset.stageId);
+  });
+});
+</script>
+</html>
